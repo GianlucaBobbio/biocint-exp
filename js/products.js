@@ -21,14 +21,17 @@
 
   // Catálogo real de biocint (fábrica de cintas autoadhesivas — Villa Maipú, San Martín).
   const PRODUCTS = [
-    { name: "Cinta de embalaje cristal", category: "embalaje", desc: "Cinta autoadhesiva transparente con excelente agarre y resistencia para el cierre seguro de cajas.", specs: ["24/48/72 mm", "40 mic", "40–100 mts"], color: "#dfe7e2", tag: "Más vendida" },
-    { name: "Cinta de embalaje marrón", category: "embalaje", desc: "La misma adhesión y resistencia en color marrón, ideal para despacho y cajas de cartón.", specs: ["24/48/72 mm", "40 mic", "40–100 mts"], color: "#c99d63" },
-    { name: 'Cinta de embalaje "Frágil"', category: "embalaje", desc: "Presentación pre-impresa: cinta blanca con leyenda “Frágil” en rojo de alta visibilidad para el cuidado de mercadería delicada.", specs: ["24/48/72 mm", "Blanco / rojo", "Stock"], color: "#f4f5f7", band: "FRÁGIL", bandColor: "#ffffff", bandInk: "#e01f1f" },
-    { name: "Cinta de embalaje personalizada", category: "personalizada", desc: "Impresión flexográfica pre-impresa: hasta 4 colores sobre fondo blanco o marrón. Sello de seguridad y publicidad de tu marca en cada envío.", specs: ["Hasta 4 colores", "24/48/72 mm", "40–100 mts"], color: "#e7e0cf", tag: "Personalizada", hot: true, band: "TU MARCA", bandColor: "#312866", bandInk: "#ffffff" },
-    { name: "Cinta perimetral personalizada", category: "personalizada", desc: "Cinta perimetral en base polietileno, impresa hasta 4 colores sobre fondo de color. Consultá medidas y colores.", specs: ["Base polietileno", "Hasta 4 colores", "A medida"], color: "#e8eef0", bands: [{ text: "PRECAUCIÓN", color: "#f2c200", ink: "#1a1a1a" }, { text: "PRECAUCIÓN", color: "#ffffff", ink: "#e01f1f" }] },
-    { name: "Cinta de embalaje de color", category: "color", desc: "Cintas de color fabricadas a pedido (demora mínima 10 días). Rojo, negro y blanco; consultá por otros colores.", specs: ["Rojo / Negro / Blanco", "24/48/72 mm", "A pedido"], color: "#b23b3b" },
+    { name: "Cinta de embalaje cristal", category: "embalaje", desc: "Cinta autoadhesiva transparente con excelente agarre y resistencia para el cierre seguro de cajas.", specs: ["24/48/72 mm", "40 mic", "40–100 mts"], color: "#dfe7e2", tag: "Más vendida", img: "../assets/tapes/cristal.jpg" },
+    { name: "Cinta de embalaje marrón", category: "embalaje", desc: "La misma adhesión y resistencia en color marrón, ideal para despacho y cajas de cartón.", specs: ["24/48/72 mm", "40 mic", "40–100 mts"], color: "#c99d63", img: "../assets/tapes/marron.jpg" },
+    { name: 'Cinta de embalaje "Frágil"', category: "embalaje", desc: "Presentación pre-impresa: cinta blanca con leyenda “Frágil” en rojo de alta visibilidad para el cuidado de mercadería delicada.", specs: ["24/48/72 mm", "Blanco / rojo", "Stock"], color: "#f4f5f7", band: "FRÁGIL", bandColor: "#ffffff", bandInk: "#e01f1f", img: "../assets/tapes/fragil.jpg" },
+    { name: "Cinta de embalaje personalizada", category: "personalizada", desc: "Impresión flexográfica pre-impresa: hasta 4 colores sobre fondo blanco o marrón. Sello de seguridad y publicidad de tu marca en cada envío.", specs: ["Hasta 4 colores", "24/48/72 mm", "40–100 mts"], color: "#e7e0cf", tag: "Personalizada", hot: true, band: "TU MARCA", bandColor: "#312866", bandInk: "#ffffff", img: "../assets/tapes/biocint.jpg" },
+    { name: "Cinta perimetral personalizada", category: "personalizada", desc: "Cinta perimetral en base polietileno, impresa hasta 4 colores sobre fondo de color. Consultá medidas y colores.", specs: ["Base polietileno", "Hasta 4 colores", "A medida"], color: "#e8eef0", bands: [{ text: "PRECAUCIÓN", color: "#f2c200", ink: "#1a1a1a" }, { text: "PRECAUCIÓN", color: "#ffffff", ink: "#e01f1f" }], img: "../assets/tapes/precaucion.jpg" },
+    { name: "Cinta de embalaje de color", category: "color", desc: "Cintas de color fabricadas a pedido (demora mínima 10 días). Rojo, negro y blanco; consultá por otros colores.", specs: ["Rojo / Negro / Blanco", "24/48/72 mm", "A pedido"], color: "#b23b3b", img: "../assets/tapes/roja.jpg" },
     { name: "Servicio de impresión", category: "servicios", desc: "Imprimimos sobre polietileno de baja y alta densidad, papel kraft y polipropileno. Ancho hasta 800 mm. Pedí la lista de precios por WhatsApp.", specs: ["Kraft / PE / PP", "Ancho máx. 800 mm", "A pedido"], color: "#e8eef0", tag: "Servicio", art: "bag" },
   ];
+
+  // Foto del hero (rollo real biocint) para los diseños con hero de rollo.
+  const HERO_IMG = "../assets/tapes/biocint.jpg";
 
   // Aclara (p>0) u oscurece (p<0) un color hex. Devuelve el input si no es hex.
   function shade(hex, p) {
@@ -171,6 +174,14 @@
     </svg>`;
   }
 
+  // Arte de la card: foto real del producto si existe, si no la ilustración SVG.
+  function cardArt(p, color, opts) {
+    if (p && p.img) {
+      return `<img src="${p.img}" alt="${p.name}" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover">`;
+    }
+    return rollSvg(color, opts);
+  }
+
   function filtered(cat) {
     return cat && cat !== "all" ? PRODUCTS.filter((p) => p.category === cat) : PRODUCTS.slice();
   }
@@ -207,25 +218,11 @@
       });
     }
 
-    // Rollos de hero (mismo diseño que el catálogo, variante 11).
-    // Uso: <div data-hero-roll data-roll-color="#e7e0cf" data-roll-band="#312866" ...></div>
+    // Hero: foto real del rollo biocint (reemplaza la ilustración SVG).
+    // Uso: <div data-hero-roll></div>  (opcional data-roll-img para otra foto)
     document.querySelectorAll("[data-hero-roll]").forEach((el) => {
-      const d = el.dataset;
-      el.innerHTML = rollSvg(d.rollColor || undefined, {
-        text: d.rollText || "biocint",
-        logo: d.rollLogo || undefined,
-        band: d.rollBand || undefined,
-        bandText: d.rollInk || undefined,
-        bgTop: d.rollBg || undefined,
-        bgBottom: d.rollBg2 || d.rollBg || undefined,
-        core: d.rollCore || undefined,
-      });
-      const svg = el.querySelector("svg");
-      if (svg) {
-        svg.style.width = "100%";
-        svg.style.height = "100%";
-        svg.style.display = "block";
-      }
+      const src = el.dataset.rollImg || HERO_IMG;
+      el.innerHTML = `<img src="${src}" alt="Rollo de cinta de embalaje biocint" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover">`;
     });
 
     // Links de WhatsApp declarativos: [data-wa="mensaje"]
@@ -243,6 +240,7 @@
     WHATSAPP_NUMBER,
     waLink,
     rollSvg,
+    cardArt,
     filtered,
     productMessage,
     mount,

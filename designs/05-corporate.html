@@ -130,7 +130,7 @@
   const B=window.BIOCINT;
   document.getElementById("filters").innerHTML=B.CATEGORIES.map((c,i)=>`<button class="chip ${i===0?'active':''}" data-filter="${c.id}">${c.label}</button>`).join("");
   B.mount({grid:"#grid",chipsContainer:"#filters",cardFn:(p)=>`<article class="card">
-    <div class="media">${B.rollSvg(p.color,{text:p.band,band:p.bandColor,bandText:p.bandInk,bands:p.bands,art:p.art,bgTop:'#eef4fb',bgBottom:'#e2ecf7',core:'#fff'})}${p.tag?`<span class="tag ${p.hot?'hot':''}">${p.tag}</span>`:""}</div>
+    <div class="media">${B.cardArt(p,p.color,{text:p.band,band:p.bandColor,bandText:p.bandInk,bands:p.bands,art:p.art,bgTop:'#eef4fb',bgBottom:'#e2ecf7',core:'#fff'})}${p.tag?`<span class="tag ${p.hot?'hot':''}">${p.tag}</span>`:""}</div>
     <div class="body"><h3>${p.name}</h3><p class="desc">${p.desc}</p>
     <div class="specs">${p.specs.map(s=>`<span>${s}</span>`).join("")}</div>
     <a class="btn btn-blue" target="_blank" rel="noopener" href="${B.waLink(B.productMessage(p))}">Consultar por WhatsApp</a></div></article>`});

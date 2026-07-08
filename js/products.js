@@ -219,10 +219,13 @@
     }
 
     // Hero: foto real del rollo biocint (reemplaza la ilustración SVG).
-    // Uso: <div data-hero-roll></div>  (opcional data-roll-img para otra foto)
+    // Uso: <div data-hero-roll></div>  (opcional data-roll-img / data-roll-bg)
+    // Va con object-fit:contain para no recortar el rollo; el letterbox se
+    // rellena con el color de fondo del hero (data-roll-bg) de cada diseño.
     document.querySelectorAll("[data-hero-roll]").forEach((el) => {
       const src = el.dataset.rollImg || HERO_IMG;
-      el.innerHTML = `<img src="${src}" alt="Rollo de cinta de embalaje biocint" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover">`;
+      const bg = el.dataset.rollBg ? `background:${el.dataset.rollBg};` : "";
+      el.innerHTML = `<img src="${src}" alt="Rollo de cinta de embalaje biocint" loading="lazy" style="display:block;width:100%;height:100%;object-fit:contain;${bg}">`;
     });
 
     // Links de WhatsApp declarativos: [data-wa="mensaje"]

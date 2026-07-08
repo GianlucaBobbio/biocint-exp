@@ -32,6 +32,9 @@
 
   // Foto del hero (rollo real biocint) para los diseños con hero de rollo.
   const HERO_IMG = "../assets/tapes/biocint.jpg";
+  const HERO_SUPER = "../assets/tapes/super.jpg";
+  const HERO_POTE = "../assets/tapes/pote.jpg";
+  const HERO_CAJA = "../assets/caja-biocint.jpg";
 
   // Aclara (p>0) u oscurece (p<0) un color hex. Devuelve el input si no es hex.
   function shade(hex, p) {
@@ -218,14 +221,53 @@
       });
     }
 
-    // Hero: foto real del rollo biocint (reemplaza la ilustración SVG).
-    // Uso: <div data-hero-roll></div>  (opcional data-roll-img / data-roll-bg)
-    // Va con object-fit:contain para no recortar el rollo; el letterbox se
-    // rellena con el color de fondo del hero (data-roll-bg) de cada diseño.
+    // Hero: foto real del producto con cinta biocint (caja, bolsa o pote).
+    // Uso: <div data-hero-roll data-roll-img="../assets/tapes/super.jpg"></div>
     document.querySelectorAll("[data-hero-roll]").forEach((el) => {
       const src = el.dataset.rollImg || HERO_IMG;
-      const bg = el.dataset.rollBg ? `background:${el.dataset.rollBg};` : "";
-      el.innerHTML = `<img src="${src}" alt="Rollo de cinta de embalaje biocint" loading="lazy" style="display:block;width:100%;height:100%;object-fit:contain;${bg}">`;
+      el.innerHTML = `<img src="${src}" alt="Cinta de embalaje biocint en uso" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover">`;
+    });
+
+    // Hero collage: cards superpuestas mezclando las 3 fotos de producto.
+    // Uso: <div data-hero-stack></div>  (opcional data-hero-stack="a.jpg,b.jpg,c.jpg")
+    // data-stack-frame="#fff" para el borde de las cards (default blanco).
+    document.querySelectorAll("[data-hero-stack]").forEach((el) => {
+      const custom = (el.getAttribute("data-hero-stack") || "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const imgs = custom.length
+        ? custom
+        : [HERO_SUPER, HERO_CAJA, HERO_POTE];
+      const frame = el.dataset.stackFrame || "#fff";
+      el.style.position = "relative";
+      if (!el.style.aspectRatio) el.style.aspectRatio = "1 / 1";
+      const card = (opts) =>
+        `<figure style="position:absolute;margin:0;overflow:hidden;border-radius:16px;background:${frame};border:5px solid ${frame};box-shadow:0 24px 50px rgba(20,18,40,.26);${opts.pos};transform:rotate(${opts.rot});z-index:${opts.z}">` +
+        `<img src="${opts.src}" alt="${opts.alt}" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover">` +
+        `</figure>`;
+      el.innerHTML =
+        card({
+          src: imgs[1] || imgs[0],
+          alt: "",
+          pos: "right:0;top:2%;width:54%;aspect-ratio:4/3",
+          rot: "3.5deg",
+          z: 1,
+        }) +
+        card({
+          src: imgs[0],
+          alt: "Cinta de embalaje biocint en uso",
+          pos: "left:0;top:16%;width:60%;aspect-ratio:3/4",
+          rot: "-4deg",
+          z: 2,
+        }) +
+        card({
+          src: imgs[2] || imgs[0],
+          alt: "",
+          pos: "right:3%;bottom:0;width:50%;aspect-ratio:1/1",
+          rot: "-1.5deg",
+          z: 3,
+        });
     });
 
     // Links de WhatsApp declarativos: [data-wa="mensaje"]

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>biocint — Brutalist Bold</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Anton&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#f5f2e9;--ink:#111;--green:#312866;--yellow:#ffd21e;--pink:#ff5d8f;--blue:#2f6bff;--wa:#25d366;--sans:"Space Grotesk",system-ui,sans-serif;--display:"Anton",Impact,sans-serif}
+  *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}
+  body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{margin:0 0 .3em;line-height:.95;text-transform:uppercase}
+  h1{font-family:var(--display);font-size:clamp(3rem,10vw,7rem);font-weight:400;letter-spacing:-.01em}
+  h2{font-family:var(--display);font-size:clamp(2rem,5vw,3.6rem);font-weight:400}h3{font-size:1.05rem;font-weight:700;letter-spacing:.01em}
+  p{margin:0 0 1rem}a{color:inherit;text-decoration:none}svg{display:block;max-width:100%}ul{margin:0;padding:0;list-style:none}
+  .container{max-width:1200px;margin-inline:auto;padding-inline:20px}
+  .eyebrow{display:inline-block;font-weight:700;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--bg);padding:.4em .8em;margin-bottom:1rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-weight:700;font-size:.95rem;text-transform:uppercase;letter-spacing:.03em;padding:.85rem 1.5rem;border:3px solid var(--ink);cursor:pointer;transition:.12s;box-shadow:5px 5px 0 var(--ink);background:#fff;color:var(--ink)}
+  .btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+  .btn-green{background:var(--green);color:#fff}.btn-yellow{background:var(--yellow)}.btn-wa{background:var(--wa);color:#03301c}
+  .brand-logo{height:34px;width:auto;display:block}.foot-logo{height:38px;width:auto;display:block}.logo-white{filter:brightness(0) invert(1)}
+  header.site{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:3px solid var(--ink)}
+  .hdr{display:flex;align-items:center;height:70px;gap:1.5rem}
+  .brand{font-family:var(--display);font-size:1.9rem;letter-spacing:.02em}
+  nav.main{display:flex;gap:1.4rem;margin-left:auto}nav.main a{font-weight:700;text-transform:uppercase;font-size:.85rem;letter-spacing:.04em}nav.main a:hover{color:var(--green)}
+  .hero{border-bottom:3px solid var(--ink);position:relative;overflow:hidden}
+  .hero .container{padding:clamp(3rem,7vw,5rem) 20px}
+  .hero h1{max-width:14ch}.hero h1 em{font-style:normal;background:var(--yellow);padding:0 .1em;box-decoration-break:clone}
+  .lead{font-size:1.2rem;font-weight:500;max-width:48ch;margin:1.5rem 0 0}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+  .ticker{background:var(--green);color:#fff;border-bottom:3px solid var(--ink);overflow:hidden;white-space:nowrap}
+  .ticker-in{display:inline-flex;gap:2rem;padding:.7rem 0;font-family:var(--display);font-size:1.3rem;letter-spacing:.04em;animation:sc 20s linear infinite}
+  @keyframes sc{to{transform:translateX(-50%)}}
+  section.pad{padding:clamp(3rem,6vw,5rem) 0}
+  .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:3px solid var(--ink);background:var(--ink)}
+  .fbox{background:var(--bg);padding:clamp(1.6rem,4vw,2.6rem)}
+  .fbox.dark{background:var(--pink);color:#fff}
+  .pline{border:3px solid var(--ink);padding:.7rem 1rem;font-family:var(--display);font-size:1.5rem;letter-spacing:.05em;margin-bottom:.8rem;background:#fff;color:var(--ink)}
+  .pline.y{background:var(--yellow)}.pline.b{background:var(--blue);color:#fff}
+  .check{display:grid;gap:.5rem;margin:1rem 0 1.6rem}.check li{font-weight:600;padding-left:1.8rem;position:relative}.check li::before{content:"■";position:absolute;left:0}
+  .catalog{border-bottom:3px solid var(--ink)}
+  .filters{display:flex;flex-wrap:wrap;gap:0;margin:1.5rem 0 2rem;border:3px solid var(--ink);width:fit-content;max-width:100%;overflow:hidden}
+  .chip{font-weight:700;text-transform:uppercase;font-size:.82rem;letter-spacing:.03em;padding:.6rem 1.1rem;background:#fff;border:0;border-right:3px solid var(--ink);cursor:pointer;transition:.1s}
+  .chip:last-child{border-right:0}.chip:hover{background:var(--yellow)}.chip.active{background:var(--ink);color:var(--bg)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.4rem}
+  .card{background:#fff;border:3px solid var(--ink);display:flex;flex-direction:column;box-shadow:6px 6px 0 var(--ink);transition:.12s}
+  .card:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 var(--ink)}
+  .media{aspect-ratio:16/10;position:relative;border-bottom:3px solid var(--ink)}.media svg{width:100%;height:100%}
+  .tag{position:absolute;top:0;right:0;font-weight:700;text-transform:uppercase;font-size:.72rem;letter-spacing:.04em;padding:.35em .7em;background:var(--yellow);border-left:3px solid var(--ink);border-bottom:3px solid var(--ink)}
+  .tag.hot{background:var(--pink);color:#fff}
+  .body{padding:1.1rem;display:flex;flex-direction:column;flex:1}.body h3{margin-bottom:.3rem}
+  .desc{font-size:.9rem;margin-bottom:.8rem;color:#333}
+  .specs{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.1rem}.specs span{font-size:.72rem;font-weight:700;text-transform:uppercase;border:2px solid var(--ink);padding:.2em .5em}
+  .card .btn{margin-top:auto;width:100%;justify-content:center;box-shadow:none;border-width:3px;white-space:nowrap}
+  .cta{background:var(--blue);color:#fff;border-bottom:3px solid var(--ink)}.cta-inner{display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;padding:clamp(2.5rem,5vw,3.5rem) 0}.cta h2{color:#fff}.cta p{margin:0;font-weight:500}
+  footer.site{padding:2.5rem 0 1.5rem;font-weight:600}
+  .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem}.foot h4{font-family:var(--display);font-size:1.1rem;margin-bottom:.6rem}.foot a,.foot span{display:block;font-size:.9rem;padding:.2rem 0}.foot a:hover{color:var(--green)}
+  .foot-bottom{margin-top:2rem;padding-top:1.2rem;border-top:3px solid var(--ink);font-size:.84rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+  .wa{position:fixed;right:20px;bottom:20px;z-index:60;width:58px;height:58px;background:var(--wa);color:#03301c;display:grid;place-items:center;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
+  @media(max-width:880px){nav.main{display:none}.feature-grid,.foot{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="container hdr">
+  <a class="brand" href="#top"><img class="brand-logo" src="../assets/logo-biocint.svg" alt="biocint"></a>
+  <nav class="main"><a href="#impresion">Impresas</a><a href="#productos">Productos</a><a href="#contacto">Contacto</a></nav>
+  <a class="btn btn-wa" data-wa="Hola biocint 👋 Consulta." href="#">WhatsApp</a>
+</div></header>
+
+<main id="top">
+  <section class="hero"><div class="container">
+    <span class="eyebrow">Fabricación propia · Mayorista</span>
+    <h1>Cinta que <em>agarra</em> y no suelta.</h1>
+    <p class="lead">Cintas de embalaje para comercios, depósitos y fábricas. Y cintas impresas con tu logo o leyendas. Directo de fábrica.</p>
+    <div class="hero-actions"><a class="btn btn-green" href="#productos">Ver productos</a><a class="btn btn-yellow" data-wa="Hola biocint 👋 Quiero cotizar por volumen." href="#">Cotizar</a></div>
+  </div></section>
+
+  <div class="ticker"><div class="ticker-in">
+    <span>ACRÍLICA ★ HOTMELT ★ KRAFT ★ FILAMENTO ★ IMPRESA ★ DEMARCACIÓN ★</span>
+    <span>ACRÍLICA ★ HOTMELT ★ KRAFT ★ FILAMENTO ★ IMPRESA ★ DEMARCACIÓN ★</span>
+  </div></div>
+
+  <section class="pad" id="impresion"><div class="container">
+    <div class="feature-grid">
+      <div class="fbox"><span class="eyebrow">Lo más buscado</span><h2>Cintas impresas</h2>
+        <p style="font-weight:500">Tu logo, marca o leyendas operativas impresos sobre cinta resistente.</p>
+        <ul class="check"><li>1, 2 o full color</li><li>Transparente o marrón</li><li>Anchos a medida</li></ul>
+        <a class="btn btn-green" data-wa="Hola biocint 👋 Quiero cotizar CINTAS IMPRESAS." href="#">Cotizar impresión</a></div>
+      <div class="fbox dark"><div class="pline y">TU LOGO ACÁ</div><div class="pline">FRÁGIL · FRÁGIL</div><div class="pline b">NO ESTIBAR</div></div>
+    </div>
+  </div></section>
+
+  <section class="catalog pad" id="productos"><div class="container">
+    <span class="eyebrow">Catálogo</span><h2>Productos</h2>
+    <p style="font-weight:500;max-width:60ch">Elegí y coordinamos por WhatsApp. Sin carrito ni pagos online.</p>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </div></section>
+
+  <section class="cta" id="contacto"><div class="container cta-inner">
+    <div><h2>Pedí ahora</h2><p>Precio por volumen y cintas impresas a medida.</p></div>
+    <a class="btn btn-yellow" data-wa="Hola biocint 👋 Quiero recibir información y precios." href="#">Escribir por WhatsApp</a>
+  </div></section>
+</main>
+
+<footer class="site"><div class="container">
+  <div class="foot">
+    <div><img class="foot-logo" src="../assets/logo-biocint.svg" alt="biocint"><p style="margin-top:.6rem;max-width:34ch">Cintas de embalaje y cintas impresas. Directo de fábrica.</p></div>
+    <div><h4>Productos</h4><a href="#productos">Embalaje</a><a href="#impresion">Impresas</a><a href="#productos">Técnicas</a></div>
+    <div><h4>Contacto</h4><a data-wa="Hola biocint 👋" href="#">WhatsApp</a><span>Lun a Vie · 8–17 h</span><span>Buenos Aires, AR</span></div>
+  </div>
+  <div class="foot-bottom"><span>© <span id="year"></span> BIOCINT</span><span>Sin vueltas.</span></div>
+</div></footer>
+
+<a class="wa" data-wa="Hola biocint 👋 Consulta sobre cintas." href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2Zm4.52 11.99c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"/></svg></a>
+
+<script src="../js/products.js"></script>
+<script>
+  const B=window.BIOCINT;
+  document.getElementById("filters").innerHTML=B.CATEGORIES.map((c,i)=>`<button class="chip ${i===0?'active':''}" data-filter="${c.id}">${c.label}</button>`).join("");
+  B.mount({grid:"#grid",chipsContainer:"#filters",cardFn:(p)=>`<article class="card">
+    <div class="media">${B.rollSvg(p.color,{text:p.band,band:p.bandColor,bandText:p.bandInk,bands:p.bands,art:p.art,bgTop:'#f5f2e9',bgBottom:'#ece7d8',core:'#fff'})}${p.tag?`<span class="tag ${p.hot?'hot':''}">${p.tag}</span>`:""}</div>
+    <div class="body"><h3>${p.name}</h3><p class="desc">${p.desc}</p>
+    <div class="specs">${p.specs.map(s=>`<span>${s}</span>`).join("")}</div>
+    <a class="btn btn-green" target="_blank" rel="noopener" href="${B.waLink(B.productMessage(p))}">Consultar</a></div></article>`});
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>biocint — 10 propuestas de diseño</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --shell-bg: #0c1712;
+      --shell-panel: #10201a;
+      --shell-line: rgba(255, 255, 255, .1);
+      --shell-ink: #eaf1ec;
+      --shell-muted: #9fb0a6;
+      --shell-accent: #25d366;
+      --tabbar-h: 60px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--shell-bg);
+      color: var(--shell-ink);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .tabbar {
+      height: var(--tabbar-h);
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: 0 12px;
+      background: var(--shell-panel);
+      border-bottom: 1px solid var(--shell-line);
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+    .tabbar::-webkit-scrollbar { height: 6px; }
+    .tabbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 3px; }
+    .shell-brand {
+      display: flex; align-items: center; gap: .45rem;
+      font-weight: 800; letter-spacing: -.02em; font-size: 1.05rem;
+      padding-right: .8rem; margin-right: .3rem; white-space: nowrap;
+      border-right: 1px solid var(--shell-line); height: 60%;
+    }
+    .shell-brand svg { color: var(--shell-accent); }
+    .shell-logo { height: 22px; width: auto; display: block; filter: brightness(0) invert(1); }
+    .tab {
+      appearance: none; border: 1px solid transparent; background: transparent;
+      color: var(--shell-muted); font: inherit; font-weight: 600; font-size: .86rem;
+      padding: .5rem .85rem; border-radius: 999px; cursor: pointer; white-space: nowrap;
+      transition: background .15s, color .15s, border-color .15s;
+      display: inline-flex; align-items: center; gap: .45rem;
+    }
+    .tab .num {
+      font-size: .72rem; font-weight: 800; opacity: .6;
+      min-width: 1.2em; text-align: center;
+    }
+    .tab:hover { color: var(--shell-ink); background: rgba(255,255,255,.05); }
+    .tab.active { color: #06301a; background: var(--shell-accent); border-color: var(--shell-accent); }
+    .tab.active .num { opacity: .8; }
+    .tab-lab { border-color: var(--shell-line); color: #ffd21e; }
+    .tab-lab:hover { background: rgba(255,210,30,.1); color: #ffd21e; }
+    .tab-lab.active { background: #ffd21e; color: #2a2100; border-color: #ffd21e; }
+    .stage { flex: 1 1 auto; position: relative; background: #fff; }
+    iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .hint {
+      margin-left: auto; padding-left: 1rem; color: var(--shell-muted);
+      font-size: .78rem; white-space: nowrap; display: flex; align-items: center; gap: .4rem;
+    }
+    @media (max-width: 720px) { .hint { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="tabbar" role="tablist" aria-label="Propuestas de diseño">
+    <span class="shell-brand">
+      <img src="assets/logo-biocint.svg" alt="biocint" class="shell-logo" />
+    </span>
+    <!-- tabs render por JS -->
+    <button class="tab tab-lab" id="tab-lab"><span class="num">★</span>SVG cintas</button>
+    <span class="hint">← 10 propuestas · elegí una →</span>
+  </div>
+  <div class="stage">
+    <iframe id="stage-frame" title="Vista de diseño" src="designs/01-emerald.html"></iframe>
+  </div>
+
+  <script>
+    const DESIGNS = [
+      { file: "01-emerald.html",   name: "Emerald Clean" },
+      { file: "02-industrial.html",name: "Industrial Dark" },
+      { file: "03-editorial.html", name: "Minimal Editorial" },
+      { file: "04-kraft.html",     name: "Kraft Packaging" },
+      { file: "05-corporate.html", name: "Corporate Blue" },
+      { file: "06-brutalist.html", name: "Brutalist Bold" },
+      { file: "07-glass.html",     name: "Glass Gradient" },
+      { file: "08-swiss.html",     name: "Swiss Grid" },
+      { file: "09-eco.html",       name: "Eco Nature" },
+      { file: "10-neon.html",      name: "Tech Neon" },
+    ];
+
+    const tabbar = document.querySelector(".tabbar");
+    const hint = tabbar.querySelector(".hint");
+    const frame = document.getElementById("stage-frame");
+    const tabs = [];
+
+    function activate(i, push) {
+      tabs.forEach((t, k) => {
+        const on = k === i;
+        t.classList.toggle("active", on);
+        t.setAttribute("aria-selected", String(on));
+      });
+      frame.src = "designs/" + DESIGNS[i].file;
+      if (push) history.replaceState(null, "", "#" + (i + 1));
+      document.title = "biocint — " + DESIGNS[i].name + " (" + (i + 1) + "/10)";
+    }
+
+    DESIGNS.forEach((d, i) => {
+      const b = document.createElement("button");
+      b.className = "tab";
+      b.setAttribute("role", "tab");
+      b.innerHTML = '<span class="num">' + String(i + 1).padStart(2, "0") + "</span>" + d.name;
+      b.addEventListener("click", () => activate(i, true));
+      tabbar.insertBefore(b, hint);
+      tabs.push(b);
+    });
+
+    const labTab = document.getElementById("tab-lab");
+    function activateLab(push) {
+      tabs.forEach((t) => { t.classList.remove("active"); t.setAttribute("aria-selected", "false"); });
+      labTab.classList.add("active");
+      frame.src = "designs/svg-lab.html";
+      if (push) history.replaceState(null, "", "#svg");
+      document.title = "biocint — SVG cintas (POV 3/4)";
+    }
+    labTab.addEventListener("click", () => activateLab(true));
+
+    const origActivate = activate;
+    activate = function (i, push) { labTab.classList.remove("active"); origActivate(i, push); };
+
+    if (location.hash === "#svg") {
+      activateLab(false);
+    } else {
+      const start = Math.min(Math.max(parseInt(location.hash.replace("#", ""), 10) || 1, 1), DESIGNS.length) - 1;
+      activate(start, false);
+    }
+
+    window.addEventListener("keydown", (e) => {
+      const cur = tabs.findIndex((t) => t.classList.contains("active"));
+      if (e.key === "ArrowRight") activate((cur + 1) % DESIGNS.length, true);
+      if (e.key === "ArrowLeft") activate((cur - 1 + DESIGNS.length) % DESIGNS.length, true);
+    });
+  </script>
+</body>
+</html>

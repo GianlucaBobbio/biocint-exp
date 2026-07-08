@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>biocint — SVG lab (3 finalistas)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#0e1216;--panel:#161c22;--line:#28313a;--ink:#eef3f2;--soft:#9fb0ab;--accent:#7a6cd6;--brand:#312866}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 24px 64px}
+  header{margin-bottom:22px}
+  h1{font-family:"Sora",sans-serif;font-size:clamp(1.4rem,3vw,1.9rem);margin:0 0 .4rem}
+  .lede{color:var(--soft);margin:0}
+  .stack{display:flex;flex-direction:column;gap:22px;margin-top:24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .frame{aspect-ratio:3/2;display:grid;place-items:center;position:relative}
+  .frame svg{width:100%;height:100%}
+  .meta{padding:.85rem 1.1rem;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+  .meta .name{font-weight:600}
+  .meta .no{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--accent);border:1px solid var(--line);padding:.2em .5em;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>biocint — finalistas</h1>
+    <p class="lede">Rollo 3/4, plano técnico y el diseño original. El color es ajustable por diseño.</p>
+  </header>
+  <div class="stack" id="stack"></div>
+</div>
+
+<script>
+const BRAND="#312866", BRANDL="#6b5fb0", CARD="#c9975a", HOLE="#1c1204", WHITE="#ffffff";
+const svg=(vb,label,inner)=>`<svg viewBox="0 0 ${vb}" role="img" aria-label="${label}">${inner}</svg>`;
+
+/* Letras verticales distribuidas sobre una elipse (la palabra curva, las letras no giran) */
+function curvedUpright(str,cx,cy,rx,ry,a0,a1,fs,fill){
+  let out="";const N=str.length;
+  for(let i=0;i<N;i++){
+    const ch=str[i];if(ch===" ")continue;
+    const f=(i+0.5)/N;const a=(a0+(a1-a0)*f)*Math.PI/180;
+    const x=(cx+rx*Math.cos(a)).toFixed(1),y=(cy+ry*Math.sin(a)).toFixed(1);
+    out+=`<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" font-family="'Sora',sans-serif" font-weight="800" font-size="${fs}" fill="${fill}">${ch}</text>`;
+  }
+  return out;
+}
+
+/* ========================= 01 — ROLLO 3/4 ========================= */
+function v1(){
+ const cx=200,cy=120,Rx=126,Ry=47,H=62,crx=47,cry=17,depth=3;
+ let rings="";const n=13;
+ for(let i=1;i<n;i++){const t=i/n;const rx=crx+(Rx-crx)*t,ry=cry+(Ry-cry)*t;const op=(i%2? .10:.05);rings+=`<ellipse cx="${cx}" cy="${cy}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" fill="none" stroke="rgba(70,45,15,${op})" stroke-width="1"/>`;}
+ return svg("400 300","Rollo 3/4",`
+ <defs>
+   <radialGradient id="t1" cx="38%" cy="30%" r="85%"><stop offset="0" stop-color="#faf3df"/><stop offset=".55" stop-color="#ecd9ac"/><stop offset="1" stop-color="#d3b87f"/></radialGradient>
+   <linearGradient id="s1" x1="0" y1="0" x2="1" y2="0">
+     <stop offset="0" stop-color="#9c7638"/><stop offset=".16" stop-color="#c9a769"/><stop offset=".34" stop-color="#f3e4bc"/><stop offset=".52" stop-color="#e4cd97"/><stop offset=".72" stop-color="#c29e5f"/><stop offset=".88" stop-color="#a37d40"/><stop offset="1" stop-color="#875f2e"/>
+   </linearGradient>
+   <radialGradient id="c1" cx="42%" cy="34%" r="80%"><stop offset="0" stop-color="#e0b072"/><stop offset="1" stop-color="#9c6a24"/></radialGradient>
+   <radialGradient id="h1" cx="50%" cy="30%" r="80%"><stop offset="0" stop-color="#4a3418"/><stop offset="1" stop-color="#140c02"/></radialGradient>
+   <filter id="sh1" x="-40%" y="-60%" width="180%" height="260%"><feGaussianBlur stdDeviation="7"/></filter>
+   <filter id="lsh1" x="-30%" y="-40%" width="160%" height="200%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity=".28"/></filter>
+ </defs>
+ <ellipse cx="200" cy="212" rx="132" ry="18" fill="rgba(0,0,0,.22)" filter="url(#sh1)"/>
+ <path d="M ${cx-Rx} ${cy} A ${Rx} ${Ry} 0 0 0 ${cx+Rx} ${cy} L ${cx+Rx} ${cy+H} A ${Rx} ${Ry} 0 0 1 ${cx-Rx} ${cy+H} Z" fill="url(#s1)"/>
+ <path d="M ${cx-Rx} ${cy+H} A ${Rx} ${Ry} 0 0 0 ${cx+Rx} ${cy+H}" fill="none" stroke="rgba(60,40,15,.45)" stroke-width="0.5"/>
+ <ellipse cx="${cx}" cy="${cy}" rx="${Rx}" ry="${Ry}" fill="url(#t1)" stroke="rgba(70,45,15,.30)" stroke-width="1"/>
+ ${rings}
+ <ellipse cx="${cx}" cy="${cy}" rx="${Rx-2}" ry="${Ry-1}" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1"/>
+ <ellipse cx="${cx}" cy="${cy}" rx="${crx}" ry="${cry}" fill="url(#c1)"/>
+ <ellipse cx="${cx}" cy="${cy}" rx="${crx-1}" ry="${cry-1}" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="2"/>
+ <ellipse cx="${cx-40}" cy="${cy-16}" rx="46" ry="16" fill="rgba(255,255,255,.30)" transform="rotate(-20 ${cx-40} ${cy-16})"/>
+ <g filter="url(#lsh1)"><rect x="148" y="176" width="104" height="40" rx="6" fill="${WHITE}"/></g>
+ <text x="200" y="192" text-anchor="middle" dominant-baseline="middle" font-family="'Sora',sans-serif" font-weight="800" font-size="18" letter-spacing=".5" fill="${BRAND}">biocint</text>
+ <text x="200" y="207" text-anchor="middle" dominant-baseline="middle" font-family="'Space Grotesk',sans-serif" font-weight="600" font-size="8" letter-spacing="1.5" fill="${BRANDL}">48 mm × 90 m</text>`);
+}
+
+/* ========================= 06 — PLANO TÉCNICO ========================= */
+function arrowH(x1,x2,y,label){return `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#f0b429" stroke-width="1"/>
+ <path d="M${x1} ${y} l8 -3.2 v6.4 z" fill="#f0b429"/><path d="M${x2} ${y} l-8 -3.2 v6.4 z" fill="#f0b429"/>
+ <text x="${(x1+x2)/2}" y="${y-6}" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="12" fill="#f0b429">${label}</text>`;}
+function arrowV(x,y1,y2,label){return `<line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}" stroke="#f0b429" stroke-width="1"/>
+ <path d="M${x} ${y1} l-3.2 8 h6.4 z" fill="#f0b429"/><path d="M${x} ${y2} l-3.2 -8 h6.4 z" fill="#f0b429"/>
+ <text x="${x-7}" y="${(y1+y2)/2}" text-anchor="end" dominant-baseline="middle" font-family="'JetBrains Mono',monospace" font-size="12" fill="#f0b429">${label}</text>`;}
+function v6(){
+ const fx=126,fy=132,od=70,co=26;         // front view
+ const sx1=250,sx2=316,sy1=fy-od,sy2=fy+od; // side view rect
+ return svg("400 300","Plano tecnico",`
+ <rect width="400" height="300" fill="#0b1d36"/>
+ <g opacity=".16" stroke="#7fb0ff" stroke-width=".5">
+   ${Array.from({length:21},(_,i)=>`<line x1="${i*20}" y1="0" x2="${i*20}" y2="300"/>`).join("")}
+   ${Array.from({length:16},(_,i)=>`<line x1="0" y1="${i*20}" x2="400" y2="${i*20}"/>`).join("")}
+ </g>
+ <rect x="6" y="6" width="388" height="288" fill="none" stroke="#3d6797" stroke-width="1"/>
+ <!-- FRONT VIEW -->
+ <g fill="none" stroke="#a9d6ff" stroke-width="1.6">
+   <circle cx="${fx}" cy="${fy}" r="${od}"/>
+   <circle cx="${fx}" cy="${fy}" r="${od-6}" stroke-width="1"/>
+   <circle cx="${fx}" cy="${fy}" r="${co}"/>
+ </g>
+ <g stroke="#6f9fd0" stroke-width=".8" stroke-dasharray="10 3 2 3">
+   <line x1="${fx-od-12}" y1="${fy}" x2="${fx+od+12}" y2="${fy}"/>
+   <line x1="${fx}" y1="${fy-od-12}" x2="${fx}" y2="${fy+od+12}"/>
+ </g>
+ <line x1="${fx}" y1="${fy}" x2="${fx+od*0.7}" y2="${fy-od*0.7}" stroke="#f0b429" stroke-width="1"/>
+ <text x="${fx+od*0.72}" y="${fy-od*0.72-2}" font-family="'JetBrains Mono',monospace" font-size="12" fill="#f0b429">Ø110</text>
+ <text x="${fx}" y="${fy+od+26}" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#a9d6ff">VISTA FRONTAL</text>
+ ${arrowV(fx-od-24,fy-od,fy+od,"110")}
+ <!-- SIDE VIEW -->
+ <g fill="none" stroke="#a9d6ff" stroke-width="1.6">
+   <rect x="${sx1}" y="${sy1}" width="${sx2-sx1}" height="${sy2-sy1}"/>
+ </g>
+ <g stroke="#6f9fd0" stroke-width=".8" stroke-dasharray="5 3">
+   <line x1="${sx1}" y1="${fy-co}" x2="${sx2}" y2="${fy-co}"/>
+   <line x1="${sx1}" y1="${fy+co}" x2="${sx2}" y2="${fy+co}"/>
+ </g>
+ <g stroke="#6f9fd0" stroke-width=".8" stroke-dasharray="10 3 2 3"><line x1="${sx1-10}" y1="${fy}" x2="${sx2+10}" y2="${fy}"/></g>
+ <text x="${(sx1+sx2)/2}" y="${sy2+26}" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#a9d6ff">VISTA LATERAL</text>
+ ${arrowH(sx1,sx2,sy1-16,"48")}
+ <line x1="${sx2}" y1="${sy1+16}" x2="${sx2+26}" y2="${sy1+16}" stroke="#f0b429" stroke-width="1"/>
+ <text x="${sx2+30}" y="${sy1+20}" font-family="'JetBrains Mono',monospace" font-size="12" fill="#f0b429">L=90m</text>
+ <!-- TITLE BLOCK -->
+ <g font-family="'JetBrains Mono',monospace" fill="#7fb0ff">
+   <rect x="248" y="236" width="146" height="52" fill="rgba(12,30,55,.92)" stroke="#3d6797" stroke-width="1"/>
+   <line x1="346" y1="236" x2="346" y2="288" stroke="#3d6797" stroke-width="1"/>
+   <line x1="248" y1="264" x2="346" y2="264" stroke="#3d6797" stroke-width="1"/>
+   <text x="256" y="257" font-family="'Sora',sans-serif" font-weight="800" font-size="16" fill="#a9d6ff">biocint</text>
+   <text x="256" y="281" font-size="7.5" letter-spacing="0">CINTA DE EMBALAJE</text>
+   <text x="352" y="250" font-size="8">ESC 1:2</text>
+   <text x="352" y="264" font-size="8">MAT BOPP</text>
+   <text x="352" y="279" font-size="8">REV A</text>
+ </g>`);
+}
+
+/* ========================= 12 — ROLLO 3/4 CON TEXTO CURVO ========================= */
+function v12(){
+ const cx=200,cy=120,Rx=126,Ry=47,H=62,crx=47,cry=17,depth=3;
+ let rings="";const n=13;
+ for(let i=1;i<n;i++){const t=i/n;const rx=crx+(Rx-crx)*t,ry=cry+(Ry-cry)*t;const op=(i%2? .10:.05);rings+=`<ellipse cx="${cx}" cy="${cy}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" fill="none" stroke="rgba(70,45,15,${op})" stroke-width="1"/>`;}
+ return svg("400 300","Rollo 3/4 con texto curvo",`
+ <defs>
+   <radialGradient id="t12" cx="38%" cy="30%" r="85%"><stop offset="0" stop-color="#faf3df"/><stop offset=".55" stop-color="#ecd9ac"/><stop offset="1" stop-color="#d3b87f"/></radialGradient>
+   <linearGradient id="s12" x1="0" y1="0" x2="1" y2="0">
+     <stop offset="0" stop-color="#9c7638"/><stop offset=".16" stop-color="#c9a769"/><stop offset=".34" stop-color="#f3e4bc"/><stop offset=".52" stop-color="#e4cd97"/><stop offset=".72" stop-color="#c29e5f"/><stop offset=".88" stop-color="#a37d40"/><stop offset="1" stop-color="#875f2e"/>
+   </linearGradient>
+   <radialGradient id="c12" cx="42%" cy="34%" r="80%"><stop offset="0" stop-color="#e0b072"/><stop offset="1" stop-color="#9c6a24"/></radialGradient>
+   <filter id="sh12" x="-40%" y="-60%" width="180%" height="260%"><feGaussianBlur stdDeviation="7"/></filter>
+   <path id="lbl12" d="M 80 153 A 120 47 0 0 0 320 153" fill="none"/>
+ </defs>
+ <ellipse cx="200" cy="212" rx="132" ry="18" fill="rgba(0,0,0,.22)" filter="url(#sh12)"/>
+ <path d="M ${cx-Rx} ${cy} A ${Rx} ${Ry} 0 0 0 ${cx+Rx} ${cy} L ${cx+Rx} ${cy+H} A ${Rx} ${Ry} 0 0 1 ${cx-Rx} ${cy+H} Z" fill="url(#s12)"/>
+ <path d="M ${cx-Rx} ${cy+H} A ${Rx} ${Ry} 0 0 0 ${cx+Rx} ${cy+H}" fill="none" stroke="rgba(60,40,15,.45)" stroke-width="0.5"/>
+ <ellipse cx="${cx}" cy="${cy}" rx="${Rx}" ry="${Ry}" fill="url(#t12)" stroke="rgba(70,45,15,.30)" stroke-width="1"/>
+ ${rings}
+ <ellipse cx="${cx}" cy="${cy}" rx="${Rx-2}" ry="${Ry-1}" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1"/>
+ <ellipse cx="${cx}" cy="${cy}" rx="${crx}" ry="${cry}" fill="url(#c12)"/>
+ <ellipse cx="${cx}" cy="${cy}" rx="${crx-1}" ry="${cry-1}" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="2"/>
+ ${curvedUpright("biocint · biocint · biocint",200,153,120,47,150,30,16,BRAND)}`);
+}
+
+/* ========================= 11 — DISEÑO ORIGINAL (donut + banda) ========================= */
+function v11(){
+ return svg("400 300","Diseno original",`
+ <defs>
+   <radialGradient id="r11" cx="50%" cy="50%" r="50%">
+     <stop offset="0" stop-color="#f4f6f2"/><stop offset=".26" stop-color="#f4f6f2"/>
+     <stop offset=".26" stop-color="#f0d9b6"/><stop offset=".27" stop-color="#f0d9b6"/>
+     <stop offset=".27" stop-color="#e7c78e"/><stop offset=".62" stop-color="#e7c78e"/>
+     <stop offset=".62" stop-color="#d9b46f"/><stop offset=".63" stop-color="#d9b46f"/>
+     <stop offset=".63" stop-color="#cf9f4f"/><stop offset="1" stop-color="#cf9f4f"/>
+   </radialGradient>
+   <radialGradient id="ao11" cx="50%" cy="50%" r="50%">
+     <stop offset="0" stop-color="#78501e" stop-opacity="0"/><stop offset=".78" stop-color="#78501e" stop-opacity="0"/><stop offset="1" stop-color="#78501e" stop-opacity=".30"/>
+   </radialGradient>
+   <clipPath id="clip11"><circle cx="200" cy="150" r="100"/></clipPath>
+ </defs>
+ <ellipse cx="200" cy="264" rx="94" ry="12" fill="rgba(0,0,0,.16)"/>
+ <g transform="rotate(-8 200 150)">
+   <circle cx="200" cy="150" r="100" fill="url(#r11)"/>
+   <circle cx="200" cy="150" r="100" fill="url(#ao11)"/>
+   <g clip-path="url(#clip11)">
+     <g transform="rotate(24 200 150)">
+       <rect x="70" y="76" width="260" height="40" fill="${BRAND}" opacity=".95"/>
+       <text x="112" y="103" text-anchor="middle" font-family="'Sora',sans-serif" font-weight="800" font-size="18" letter-spacing="1.5" fill="#fff">biocint</text>
+       <text x="200" y="103" text-anchor="middle" font-family="'Sora',sans-serif" font-weight="800" font-size="18" letter-spacing="1.5" fill="#fff">biocint</text>
+       <text x="288" y="103" text-anchor="middle" font-family="'Sora',sans-serif" font-weight="800" font-size="18" letter-spacing="1.5" fill="#fff">biocint</text>
+     </g>
+   </g>
+   <circle cx="200" cy="150" r="27" fill="#f4f6f2"/>
+   <circle cx="200" cy="150" r="27" fill="none" stroke="#dfe4dc" stroke-width="2"/>
+ </g>`);
+}
+
+const V=[
+ {id:"01",name:"Rollo 3/4 (etiqueta)",bg:"#f3efe6",svg:v1()},
+ {id:"12",name:"Rollo 3/4 (texto curvo)",bg:"#f3efe6",svg:v12()},
+ {id:"06",name:"Plano técnico",bg:"#0b1d36",svg:v6()},
+ {id:"11",name:"Diseño original",bg:"#f4f6f2",svg:v11()},
+];
+document.getElementById("stack").innerHTML=V.map(v=>`
+ <div class="card"><div class="frame" style="background:${v.bg}">${v.svg}</div>
+ <div class="meta"><span class="name">${v.name}</span><span class="no">variante ${v.id}</span></div></div>`).join("");
+</script>
+</body>
+</html>

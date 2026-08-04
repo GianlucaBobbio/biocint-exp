@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>biocint — Combineta (Brutalist + Emerald)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Anton&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f4f6f3;
+    --surface: #ffffff;
+    --ink: #0e1a14;
+    --emerald: #0f4c3a;
+    --emerald-dark: #093327;
+    --emerald-light: #e6f2ee;
+    --emerald-accent: #1ebd64;
+    --purple: #312866;
+    --purple-light: #ece9f5;
+    --wa: #25d366;
+    --wa-dark: #128c7e;
+    --line: #0e1a14;
+    --muted: #4e5d55;
+    --sans: "Space Grotesk", "Manrope", system-ui, sans-serif;
+    --display: "Anton", Impact, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { margin: 0 0 .3em; line-height: 1.02; text-transform: uppercase; }
+  h1 { font-family: var(--display); font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 400; letter-spacing: .01em; }
+  h2 { font-family: var(--display); font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 400; letter-spacing: .02em; }
+  h3 { font-size: 1.15rem; font-weight: 800; letter-spacing: .01em; }
+  p { margin: 0 0 1rem; }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; max-width: 100%; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  
+  .container { max-width: 1240px; margin-inline: auto; padding-inline: 20px; }
+  
+  /* Badges & Buttons */
+  .eyebrow {
+    display: inline-block; font-weight: 800; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+    background: #333; color: #fff; padding: .45em .9em;
+    margin-bottom: 1.2rem;
+  }
+  
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    font-weight: 800; font-size: .95rem; text-transform: uppercase; letter-spacing: .03em;
+    padding: .85rem 1.6rem; border: 2px solid var(--line); cursor: pointer; transition: .12s;
+    box-shadow: 3px 3px 0 var(--line); background: var(--surface); color: var(--ink);
+  }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--line); }
+  .btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--line); }
+  .btn-purple { background: var(--purple); color: #fff; }
+  .btn-purple:hover { background: #231c4b; }
+  .btn-emerald { background: var(--emerald); color: #fff; }
+  .btn-emerald:hover { background: var(--emerald-dark); }
+  .btn-wa { background: var(--wa); color: #06301a; }
+  .btn-wa:hover { background: #20bd5a; }
+  .btn-sm { padding: .55rem 1.1rem; font-size: .85rem; border-width: 2px; box-shadow: 2px 2px 0 var(--line); }
+
+  /* Header */
+  header.site {
+    position: sticky; top: 0; z-index: 100; background: var(--bg);
+    border-bottom: 3px solid var(--line);
+  }
+  .hdr { display: flex; align-items: center; justify-content: space-between; height: 80px; gap: 1.5rem; }
+  .brand-logo { height: 46px; width: auto; display: block; } /* Agrandado */
+  nav.main { display: flex; gap: 1.2rem; align-items: center; }
+  nav.main a { font-weight: 700; text-transform: uppercase; font-size: .82rem; letter-spacing: .04em; padding: .4rem .6rem; }
+  nav.main a:hover { color: var(--purple); }
+  .hdr-right { display: flex; align-items: center; gap: .8rem; }
+  .hdr-schedule { font-size: .78rem; font-weight: 800; text-transform: uppercase; background: var(--purple-light); color: var(--purple); padding: .4rem .7rem; border-radius: 4px; }
+
+  /* Hero Section */
+  .hero { border-bottom: 3px solid var(--line); padding: clamp(3rem, 6vw, 4.5rem) 0; position: relative; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 2.5rem; align-items: center; }
+  .hero-title em { font-style: normal; background: var(--purple); color: #ffffff; padding: .1em .25em; display: inline-block; margin-left: -0.15em; }
+  .hero-lead { font-size: 1.18rem; font-weight: 600; color: #2a3831; max-width: 52ch; margin: 1.4rem 0 1.8rem; line-height: 1.5; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+  
+  /* Hero Side Stack (Emerald style visual) */
+  .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+  .stack-container { width: 100%; max-width: 440px; aspect-ratio: 1/1; position: relative; }
+  .stack-card {
+    position: absolute; border: none; box-shadow: 0 8px 28px rgba(0,0,0,.18);
+    background: #fff; overflow: hidden; border-radius: 10px; transition: .2s;
+  }
+  .stack-card:hover { transform: scale(1.04) rotate(0deg) !important; z-index: 10 !important; box-shadow: 0 16px 40px rgba(0,0,0,.25); }
+  .stack-card-1 { width: 68%; aspect-ratio: 4/3; top: 0; right: 0; transform: rotate(4deg); z-index: 1; }
+  .stack-card-2 { width: 72%; aspect-ratio: 3/4; top: 12%; left: 0; transform: rotate(-5deg); z-index: 2; }
+  .stack-card-3 { width: 64%; aspect-ratio: 1/1; bottom: 0; right: 6%; transform: rotate(2deg); z-index: 3; }
+  .stack-card img { width: 100%; height: 100%; object-fit: cover; }
+  
+  /* Double Ticker */
+  .tickers-wrap { border-bottom: 3px solid var(--line); }
+  .ticker { background: #333; color: #fff; border-bottom: 2px solid var(--line); overflow: hidden; white-space: nowrap; }
+  .ticker.purple { background: var(--purple); border-bottom: 0; }
+  .ticker-in { display: inline-flex; gap: 2rem; padding: .65rem 0; font-family: var(--display); font-size: 1.25rem; letter-spacing: .06em; animation: sc 24s linear infinite; }
+  .ticker-in-reverse { animation: sc-rev 24s linear infinite; }
+  @keyframes sc { to { transform: translateX(-50%); } }
+  @keyframes sc-rev { from { transform: translateX(-50%); } to { transform: translateX(0%); } }
+
+  /* Sections general */
+  section.pad { padding: clamp(3rem, 6vw, 5rem) 0; border-bottom: 3px solid var(--line); }
+
+  /* Feature Box (Cintas impresas personalizadas) */
+  .feature-box {
+    background: var(--surface); border: 3px solid var(--line); box-shadow: 6px 6px 0 var(--line);
+    display: grid; grid-template-columns: 1fr 1.05fr; gap: 0; overflow: hidden; margin-top: 1.5rem;
+  }
+  .feature-img { border-right: 3px solid var(--line); background: var(--purple-light); position: relative; }
+  .feature-img img { width: 100%; height: 100%; object-fit: cover; }
+  .feature-content { padding: clamp(1.8rem, 4vw, 3rem); display: flex; flex-direction: column; justify-content: center; }
+  .check-list { display: grid; gap: .65rem; margin: 1.2rem 0 1.8rem; font-weight: 700; color: #2a3831; }
+  .check-list li { position: relative; padding-left: 1.8rem; }
+  .check-list li::before { content: "✓"; position: absolute; left: 0; color: var(--purple); font-weight: 800; font-size: 1.1rem; }
+
+  /* Aplicaciones (Ventanas) */
+  .apps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.6rem; margin-top: 2rem; }
+  .app-card {
+    background: var(--surface); border: 3px solid black; box-shadow: none;
+    display: flex; flex-direction: column; overflow: hidden; transition: .15s;
+  }
+  .app-card:hover { border-color: var(--emerald); }
+  .app-media { height: 200px; border-bottom: 1.5px solid rgba(14,26,20,.12); position: relative; background: var(--emerald-light); }
+  .app-media img { width: 100%; height: 100%; object-fit: cover; }
+  .app-body { padding: 1.4rem; display: flex; flex-direction: column; flex: 1; }
+  .app-body h3 { font-size: 1.2rem; margin-bottom: .5rem; color: var(--emerald-dark); }
+  .app-body p { font-size: .95rem; font-weight: 500; color: var(--muted); flex: 1; }
+  .app-actions { display: flex; gap: .6rem; margin-top: 1.2rem; }
+
+  /* Cinta Perimetral Section */
+  .perimetral-box {
+    background: var(--surface); border: 3px solid var(--line); box-shadow: 6px 6px 0 var(--line);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0; overflow: hidden; margin-top: 2rem;
+  }
+  .perimetral-img { border-right: 3px solid var(--line); background: var(--emerald-light); position: relative; }
+  .perimetral-img img { width: 100%; height: 100%; object-fit: cover; }
+  .perimetral-content { padding: clamp(1.8rem, 4vw, 3rem); display: flex; flex-direction: column; justify-content: center; }
+  .prop-badge {
+    display: inline-block; font-weight: 800; font-size: .8rem; text-transform: uppercase;
+    background: #ff4d4d; color: #fff; padding: .4em .8em; border: 2px solid var(--line);
+    box-shadow: 3px 3px 0 var(--line); margin-bottom: 1rem; width: fit-content;
+  }
+
+  /* Market Section & Products */
+  .market-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; }
+  /* Market Section & Products */
+  .market-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; }
+  .market-notice {
+    background: var(--purple-light); color: var(--purple);
+    padding: .8rem 1.2rem; font-weight: 800; font-size: .95rem; border-radius: 4px; display: inline-flex; align-items: center; gap: .6rem;
+  }
+  
+  /* Anchos de Cinta Reference Showcase */
+  .widths-showcase {
+    background: var(--surface); border: 3px solid var(--line); box-shadow: 5px 5px 0 var(--line);
+    padding: 1.5rem; margin-bottom: 2.5rem;
+  }
+  .widths-title { font-weight: 800; text-transform: uppercase; font-size: .9rem; letter-spacing: .05em; margin-bottom: 1rem; color: var(--purple); }
+  .widths-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center; }
+  .width-item { border: 2px solid var(--line); padding: .8rem .4rem; background: var(--bg); font-weight: 800; }
+  .width-item .size { font-family: var(--display); font-size: 1.8rem; color: var(--purple); display: block; }
+  .width-item .use { font-size: .75rem; color: var(--muted); text-transform: uppercase; }
+
+  /* Configurator Attribute Chips */
+  .card-configurator { display: flex; flex-direction: column; gap: .7rem; margin: .8rem 0 1rem; }
+  .attr-group { display: flex; flex-direction: column; gap: .3rem; }
+  .attr-label { font-size: .74rem; font-weight: 800; text-transform: uppercase; color: var(--purple); letter-spacing: .04em; }
+  .attr-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .attr-chip {
+    font-size: .78rem; font-weight: 700; padding: .35em .7em; border: 1.5px solid var(--line);
+    background: var(--bg); cursor: pointer; transition: .12s; border-radius: 4px; color: var(--ink);
+  }
+  .attr-chip:hover { background: var(--purple-light); color: var(--purple); border-color: var(--purple); }
+  .attr-chip.active { background: var(--purple); color: #fff; border-color: var(--purple); }
+  .attr-chip.unsupported { border-style: dashed; border-color: var(--muted); opacity: .65; }
+
+  /* Subdivisions & Filter Chips */
+  .cat-tabs { display: flex; gap: .5rem; margin-bottom: 1.8rem; border-bottom: 2px solid rgba(14,26,20,.15); padding-bottom: 1rem; flex-wrap: wrap; }
+  .chip {
+    font-family: var(--sans); font-weight: 800; text-transform: uppercase; font-size: .82rem;
+    padding: .55rem 1.1rem; background: var(--surface); border: 2px solid var(--line); cursor: pointer;
+    transition: .1s; border-radius: 3px;
+  }
+  .chip:hover { background: var(--purple-light); color: var(--purple); border-color: var(--purple); }
+  .chip.active { background: var(--purple); color: #fff; border-color: var(--purple); }
+
+  /* Grid of Publications */
+  .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  .pub-card {
+    background: var(--surface); border: 3px solid black; box-shadow: none;
+    display: flex; flex-direction: column; transition: .15s; position: relative; overflow: hidden;
+  }
+  .pub-card:hover { border-color: var(--purple); }
+  .pub-media { aspect-ratio: 16/10; border-bottom: 1.5px solid rgba(14,26,20,.12); position: relative; background: #fff; overflow: hidden; }
+  .pub-tag {
+    position: absolute; top: .6rem; right: .6rem; font-weight: 800; font-size: .68rem;
+    text-transform: uppercase; padding: .28em .55em; background: var(--purple); color: #fff;
+    border-radius: 3px;
+  }
+  .pub-body { padding: 1.2rem; display: flex; flex-direction: column; flex: 1; }
+  .pub-title { font-size: 1.05rem; font-weight: 800; margin-bottom: .4rem; line-height: 1.25; }
+  .pub-footer { margin-top: auto; padding-top: .6rem; }
+  .pub-price { font-family: var(--display); font-size: 1.8rem; color: var(--purple); margin-bottom: .6rem; letter-spacing: .02em; }
+  .pub-note { font-size: .78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; background: var(--purple-light); padding: .28em .55em; border-radius: 3px; width: fit-content; margin-bottom: .8rem; }
+  .pub-actions { display: flex; gap: .5rem; }
+  .pub-actions .btn { flex: 1; padding: .65rem .5rem; font-size: .82rem; }
+
+  /* Market Bottom Buttons */
+  .market-bottom-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+  .big-action-btn {
+    background: var(--surface); border: 3px solid black; box-shadow: none;
+    padding: 1.5rem; text-align: left; transition: .15s; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .big-action-btn:hover { background: var(--purple-light); }
+  .big-action-btn h4 { font-family: var(--display); font-size: 1.4rem; color: var(--purple); margin-bottom: .4rem; }
+  .big-action-btn p { font-size: .9rem; font-weight: 600; color: var(--muted); margin-bottom: 1rem; }
+
+  /* Shipping Box (Ventana de Envíos) */
+  .shipping-box {
+    background: var(--purple); color: #fff; border: 3px solid var(--line); box-shadow: 6px 6px 0 var(--line);
+    padding: clamp(2rem, 4vw, 3rem); display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; margin-top: 2rem;
+  }
+  .shipping-info h3 { font-family: var(--display); font-size: 2.2rem; margin-bottom: .6rem; }
+  .shipping-info p { font-size: 1.1rem; font-weight: 600; opacity: .9; }
+  .shipping-cards { display: grid; gap: 1rem; }
+  .ship-card { background: rgba(255,255,255,.1); border: 2px solid #fff; padding: 1.2rem; font-weight: 700; }
+  .ship-card strong { display: block; font-size: 1.1rem; text-transform: uppercase; color: #fff; margin-bottom: .2rem; }
+
+  /* About & Factory Section */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; margin-top: 2rem; }
+  .about-text p { font-size: 1.05rem; font-weight: 500; color: #2d3b33; line-height: 1.6; }
+  .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+  .about-feat { background: var(--surface); border: 2px solid var(--line); padding: 1rem; font-weight: 800; }
+
+  /* Footer */
+  footer.site { background: var(--ink); color: #d6e2db; padding: 3.5rem 0 1.5rem; border-top: 3px solid var(--line); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; }
+  .foot-logo { height: 42px; width: auto; filter: brightness(0) invert(1); }
+  .foot-bottom { border-top: 2px solid rgba(255,255,255,.15); padding-top: 1.5rem; display: flex; justify-content: space-between; font-weight: 700; font-size: .85rem; }
+
+  /* Floating WhatsApp & Cart Drawer */
+  .floating-controls { position: fixed; right: 20px; bottom: 20px; z-index: 200; display: flex; flex-direction: column; gap: .8rem; }
+  .cart-toggle {
+    width: 60px; height: 60px; background: var(--purple); color: #fff; border: 2px solid var(--line);
+    box-shadow: 3px 3px 0 var(--line); display: grid; place-items: center; cursor: pointer; position: relative; font-weight: 800; border-radius: 4px;
+  }
+  .cart-badge { position: absolute; top: -6px; right: -6px; background: #ff4d4d; color: #fff; font-size: .72rem; font-weight: 800; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; }
+  .wa-float {
+    width: 60px; height: 60px; background: var(--wa); color: #06301a; border: 2px solid var(--line);
+    box-shadow: 3px 3px 0 var(--line); display: grid; place-items: center; cursor: pointer; border-radius: 4px;
+  }
+
+  /* Modal Cart Drawer */
+  .cart-drawer {
+    position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,.6); display: none; justify-content: flex-end;
+  }
+  .cart-drawer.active { display: flex; }
+  .cart-content {
+    width: min(480px, 100%); background: var(--bg); border-left: 4px solid var(--line);
+    display: flex; flex-direction: column; height: 100%; box-shadow: -10px 0 30px rgba(0,0,0,.3);
+  }
+  .cart-hdr { padding: 1.5rem; background: var(--purple); color: #fff; border-bottom: 3px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+  .cart-hdr h3 { margin: 0; font-family: var(--display); font-size: 1.8rem; }
+  .cart-close { background: transparent; border: 0; color: #fff; font-size: 1.8rem; cursor: pointer; font-weight: 800; }
+  .cart-items { flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: .8rem; }
+  .cart-item { background: #fff; border: 1px solid rgba(14,26,20,.2); padding: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-radius: 4px; }
+  .cart-item-title { font-weight: 800; font-size: .9rem; margin-bottom: .2rem; }
+  .cart-item-price { font-weight: 700; color: var(--purple); font-size: .95rem; }
+  .cart-qty-ctrl { display: flex; align-items: center; gap: .4rem; }
+  .qty-btn { width: 28px; height: 28px; border: 1.5px solid var(--line); background: var(--bg); font-weight: 800; cursor: pointer; border-radius: 3px; }
+  .cart-ftr { padding: 1.5rem; background: #fff; border-top: 2px solid rgba(14,26,20,.12); }
+  .cart-total-row { display: flex; justify-content: space-between; font-weight: 800; font-size: 1.2rem; margin-bottom: 1rem; }
+
+  figure { border-radius: 0 !important; }
+
+  @media (max-width: 920px) {
+    nav.main { display: none; }
+    .hero-grid, .perimetral-box, .about-grid, .shipping-box, .foot-grid { grid-template-columns: 1fr; }
+    .perimetral-img { border-right: 0; border-bottom: 3px solid var(--line); height: 240px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site">
+  <div class="container hdr">
+    <a href="#top" class="brand">
+      <img src="../assets/logo-biocint.svg" alt="biocint" class="brand-logo" />
+    </a>
+    <nav class="main">
+      <a href="#personalizadas">Cintas Personalizadas</a>
+      <a href="#market">Market</a>
+      <a href="#nosotros">Quiénes Somos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="hdr-right">
+      <span class="hdr-schedule">7 a 16 hs</span>
+      <a href="#" class="btn btn-wa btn-sm" data-wa="Hola biocint 👋 Quisiera hacer una consulta por cintas.">WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow emerald">Fabricación Nacional · Venta Mayorista</span>
+        <h1 class="hero-title">Cinta que <em>adhiere</em><br>y no se suelta.</h1>
+        <p class="hero-lead">Fabricamos cintas de embalaje para comercios, depósitos, <strong>INDUSTRIAS</strong> y fábricas. También hacemos <strong>cintas PERSONALIZADAS</strong> con tu logo o leyenda.</p>
+        <div class="hero-actions">
+          <a href="#market" class="btn btn-purple">Ver Catálogo & Market</a>
+          <a href="#" class="btn btn-wa" data-wa="Hola biocint 👋 Quiero cotizar cintas por volumen / palet.">Cotizar por WhatsApp</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div data-hero-stack style="width:min(480px,96%)"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 Scrolling Tickers -->
+  <div class="tickers-wrap">
+    <div class="ticker">
+      <div class="ticker-in">
+        <span>★ FABRICACIÓN NACIONAL ★ METRAJE REAL ★ EXCELENTE ADHESIVADO ★ ATENCIÓN DE 7 A 16 HS ★ VENTAS A TODA LA ARGENTINA ★ PRECIOS DIRECTO DE FÁBRICA ★</span>
+        <span>★ FABRICACIÓN NACIONAL ★ METRAJE REAL ★ EXCELENTE ADHESIVADO ★ ATENCIÓN DE 7 A 16 HS ★ VENTAS A TODA LA ARGENTINA ★ PRECIOS DIRECTO DE FÁBRICA ★</span>
+      </div>
+    </div>
+    <div class="ticker purple">
+      <div class="ticker-in ticker-in-reverse">
+        <span>★ CINTAS PARA HELADERÍAS ★ CÁMARAS DE FRÍO ★ CINTA COMO ETIQUETA PARA CUÑETES ★ CINTAS PERSONALIZADAS CON TU LOGO ★ FILM STRETCH ★ CINTA PERIMETRAL PRECAUCIÓN ★</span>
+        <span>★ CINTAS PARA HELADERÍAS ★ CÁMARAS DE FRÍO ★ CINTA COMO ETIQUETA PARA CUÑETES ★ CINTAS PERSONALIZADAS CON TU LOGO ★ FILM STRETCH ★ CINTA PERIMETRAL PRECAUCIÓN ★</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Cintas Impresas / Personalizadas & Aplicaciones -->
+  <section class="pad" id="personalizadas">
+    <div class="container">
+      <span class="eyebrow">Cintas Impresas & Personalizadas</span>
+      <h2>Soluciones por Rubro y Aplicaciones</h2>
+      <p style="font-weight: 600; color: var(--muted); max-width: 65ch;">Ideas de aplicación para potenciar la presencia de tu marca, proteger envíos y resolver cierres técnicos a un costo accesible.</p>
+      
+      <div class="apps-grid">
+        <!-- Ventana 1 -->
+        <article class="app-card">
+          <div class="app-media">
+            <img src="../assets/tapes/biocint.jpg" alt="Cinta como etiqueta para cuñete">
+          </div>
+          <div class="app-body">
+            <h3>Cinta como Etiqueta para Cuñete</h3>
+            <p>Mostramos lo bien que queda a un costo bajísimo comparado con una etiqueta tradicional para tambores y cuñetes industriales.</p>
+            <div class="app-actions">
+              <a href="#market" class="btn btn-sm btn-purple">Ir al Market</a>
+              <a href="#" class="btn btn-sm btn-wa" data-wa="Hola biocint 👋 Quisiera información sobre cinta como etiqueta para cuñete.">WP</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ventana 2 -->
+        <article class="app-card">
+          <div class="app-media">
+            <img src="../assets/tapes/pote.jpg" alt="Cinta para heladerías">
+          </div>
+          <div class="app-body">
+            <h3>Cinta para Heladerías</h3>
+            <p>Ideal para el cierre seguro y hermético de potes de helado. Evita aperturas en el delivery y destaca tu marca.</p>
+            <div class="app-actions">
+              <a href="#market" class="btn btn-sm btn-purple">Ir al Market</a>
+              <a href="#" class="btn btn-sm btn-wa" data-wa="Hola biocint 👋 Me interesa la cinta personalizada para heladerías.">WP</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ventana 3 -->
+        <article class="app-card">
+          <div class="app-media">
+            <img src="../assets/caja-biocint.jpg" alt="Cintas para cámara de frío">
+          </div>
+          <div class="app-body">
+            <h3>Cintas para Cámara de Frío</h3>
+            <p>Desarrolladas con cualidades adhesivas de máxima fijación que no pierden agarre ante bajas temperaturas ni humedad.</p>
+            <div class="app-actions">
+              <a href="#market" class="btn btn-sm btn-purple">Ir al Market</a>
+              <a href="#" class="btn btn-sm btn-wa" data-wa="Hola biocint 👋 Consulta por cintas especiales para cámara de frío.">WP</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ventana 4 -->
+        <article class="app-card">
+          <div class="app-media">
+            <img src="../assets/cintas-impresas.jpg" alt="Comercio minorista y pymes">
+          </div>
+          <div class="app-body">
+            <h3>¿Tenés un comercio minorista?</h3>
+            <p>El toque final único para Panaderías, Fiambrerías, Repuestos, Ferreterías y Farmacias. Seguridad y branding en cada entrega.</p>
+            <div class="app-actions">
+              <a href="#market" class="btn btn-sm btn-purple">Ir al Market</a>
+              <a href="#" class="btn btn-sm btn-wa" data-wa="Hola biocint 👋 Quiero cotizar cintas personalizadas para mi comercio.">WP</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Market Section -->
+  <section class="pad" id="market">
+    <div class="container">
+      <div class="market-head">
+        <div>
+          <span class="eyebrow emerald">Marketplace Biocint</span>
+          <h2>Catálogo de Publicaciones</h2>
+        </div>
+        <div class="market-notice">
+          <span>✓ Metraje Real, Excelente Adhesivado</span>
+        </div>
+      </div>
+
+
+      <!-- Tabs de Subdivisión -->
+      <div class="cat-tabs">
+        <button class="chip active" onclick="filterMarket('all', this)">Todas las publicaciones</button>
+        <button class="chip" onclick="filterMarket('comun', this)">Cinta Común & Film Stretch</button>
+        <button class="chip" onclick="filterMarket('personalizada', this)">Cintas Impresas / Personalizadas</button>
+      </div>
+
+      <!-- Grid de Publicaciones -->
+      <div class="market-grid" id="market-grid">
+        <!-- Publicaciones dinámicas insertadas por JS -->
+      </div>
+
+      <!-- Botones Destacados Abajo del Market -->
+      <div class="market-bottom-btns">
+        <div class="big-action-btn">
+          <div>
+            <h4>Consultá más Colores y Fondos</h4>
+            <p>Hacemos fondos en color personalizado, impresión a 3 o 4 colores y diseños especiales.</p>
+          </div>
+          <a href="#" class="btn btn-purple" data-wa="Hola biocint 👋 Quisiera consultar por más colores y fondos especiales.">Consultar Fondos & Colores</a>
+        </div>
+
+        <div class="big-action-btn">
+          <div>
+            <h4>Precios Mayoristas / Palet</h4>
+            <p>Descuentos exclusivos por volumen industrial, compras por bulto cerrado y palet completo.</p>
+          </div>
+          <a href="#" class="btn btn-purple" data-wa="Hola biocint 👋 Quiero consultar precios por volumen / palet para industria.">Precios por Mayor</a>
+        </div>
+
+        <div class="big-action-btn">
+          <div>
+            <h4>Consulte para Reventa</h4>
+            <p>Excelente margen de ganancia para distribuidores, papeleras y comercios del rubro.</p>
+          </div>
+          <a href="#" class="btn btn-wa" data-wa="Hola biocint 👋 Me interesa revender sus productos. ¿Cuáles son las condiciones?">Consulte para Reventa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ventana de Envíos & Cobertura -->
+  <section class="pad" style="background: var(--surface);">
+    <div class="container">
+      <span class="eyebrow">Logística & Despacho</span>
+      <h2>Envíos a todo el país</h2>
+      
+      <div class="shipping-box">
+        <div class="shipping-info">
+          <h3>Llegamos a donde esté tu empresa</h3>
+          <p>Vendemos y distribuimos a toda la Argentina con opciones ágiles de entrega directa o despacho.</p>
+        </div>
+        <div class="shipping-cards">
+          <div class="ship-card">
+            <strong>Zona Cercana (San Martín / CABA / GBA)</strong>
+            <span>Entrega GRATIS en pedidos por volumen coordinados por la zona.</span>
+          </div>
+          <div class="ship-card">
+            <strong>Resto del País (Interior de Argentina)</strong>
+            <span>Despacho inmediato por Correo Argentino, Expresos y Transportes a elección.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiénes Somos, Cómo Trabajamos & Mapa -->
+  <section class="pad" id="nosotros">
+    <div class="container">
+      <span class="eyebrow">Sobre Nosotros</span>
+      <h2>Quiénes Somos & Cómo Trabajamos</h2>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <p>Somos <strong>biocint</strong>, fábrica especializada en cintas autoadhesivas de embalaje e impresión flexográfica de alta precisión ubicada en Villa Maipú, San Martín, Buenos Aires.</p>
+          <p>Contamos con maquinaria moderna para garantizarte metraje exacto, bobinado perfecto y un adhesivado constante que asegura tus cargas de punta a punta.</p>
+          
+          <div class="about-features">
+            <div class="about-feat">🏭 Fábrica propia</div>
+            <div class="about-feat">🇦🇷 Cobertura Nacional</div>
+            <div class="about-feat">⏰ Atención: 7 a 16 hs</div>
+            <div class="about-feat">🤝 Atención a Revendedores</div>
+          </div>
+        </div>
+
+        <div style="border: 3px solid var(--line); box-shadow: 6px 6px 0 var(--line); overflow: hidden; height: 360px;">
+          <!-- Mapa embebido de la fábrica -->
+          <iframe title="Ubicación biocint" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.97893112345!2d-58.5285!3d-34.5795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDM0JzebjCA1OMKwMzEnNDIuNiJX!5e0!3m2!1ses!2sar!4v1650000000000!5m2!1ses!2sar" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto CTA -->
+  <section class="pad" id="contacto" style="background: var(--purple); color: #fff;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+      <div>
+        <h2 style="color: #fff; margin-bottom: .4rem;">¿Tenés dudas o querés pedir?</h2>
+        <p style="font-size: 1.1rem; opacity: .9; margin: 0;">Atención personalizada de Lunes a Viernes de 7:00 a 16:00 hs.</p>
+      </div>
+      <a href="#" class="btn btn-wa" style="font-size: 1.1rem; padding: 1rem 2rem;" data-wa="Hola biocint 👋 Quiero asesoramiento directo por WhatsApp.">Escribir por WhatsApp</a>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="site">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <img src="../assets/logo-biocint.svg" alt="biocint" class="foot-logo">
+        <p style="margin-top: .8rem; max-width: 38ch; font-weight: 500; font-size: .95rem;">
+          Fabricación y venta mayorista de cintas de embalaje y cintas impresas con tu logo.
+        </p>
+      </div>
+      <div>
+        <h4 style="color: #fff; margin-bottom: 1rem;">Navegación</h4>
+        <ul style="display: grid; gap: .4rem; font-weight: 600; font-size: .9rem;">
+          <li><a href="#personalizadas">Personalizadas</a></li>
+          <li><a href="#market">Market</a></li>
+          <li><a href="#nosotros">Quiénes Somos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: #fff; margin-bottom: 1rem;">Contacto & Horario</h4>
+        <p style="font-weight: 600; font-size: .9rem; margin: 0 0 .5rem;">⏰ Lun a Vie · 7:00 a 16:00 hs</p>
+        <p style="font-weight: 600; font-size: .9rem; margin: 0;">📍 Villa Maipú, San Martín, Bs. As.</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> BIOCINT · Fabricación de Cintas Autoadhesivas</span>
+      <span>Ventas a todo el país</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Controles Flotantes (Carrito + WA) -->
+<div class="floating-controls">
+  <div class="cart-toggle" onclick="toggleCart()" title="Ver Carrito de Compras">
+    🛒
+    <span class="cart-badge" id="cart-count">0</span>
+  </div>
+  <a href="#" class="wa-float" data-wa="Hola biocint 👋 Quisiera hacer una consulta por cintas." aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2Zm4.52 11.99c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+  </a>
+</div>
+
+<!-- Modal Drawer Carrito -->
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-content">
+    <div class="cart-hdr">
+      <h3>Mi Pedido</h3>
+      <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <!-- Elementos del carrito cargados por JS -->
+    </div>
+    <div class="cart-ftr">
+      <div class="cart-total-row">
+        <span>Total estimado (+ IVA):</span>
+        <span id="cart-total-price">$0</span>
+      </div>
+      <button class="btn btn-wa" style="width: 100%;" onclick="checkoutWhatsApp()">Finalizar pedido por WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/products.js"></script>
+<script>
+  // Configuración de planilla (Google Sheets o CSV local)
+  // Para conectar tu Google Sheet en vivo:
+  // 1. Abrí tu planilla en Google Sheets
+  // 2. Archivo -> Compartir -> Publicar en la Web -> Seleccioná "Valores separados por comas (.csv)"
+  // 3. Pegá el enlace que te da Google Sheets en la variable SPREADSHEET_CSV_URL:
+  const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLRc27yxJHyYl2NEuviRqM_nKCV49S2JmHL7Kk0-KsYLa1JE8wN09N5mQjyPkj4DQ0irA9xNIq2khf/pub?output=csv"; 
+
+  // Listado predeterminado de publicaciones con matriz de atributos (Fallback)
+  const MARKET_ITEMS = [
+    {
+      id: 'p_imp48', cat: 'personalizada', name: 'Cinta Impresa 48mm x 100mts', tag: 'Personalizada',
+      selAttrs: { attr_1: 'Blanco', attr_2: '1 Color', attr_3: '50 Rollos' },
+      attrKeys: ['attr_1', 'attr_2', 'attr_3'],
+      variants: [
+        { attrs: { attr_1: 'Blanco', attr_2: '1 Color', attr_3: '50 Rollos' }, price: 300000, rawPrice: '$300.000 + IVA', img: '../assets/tapes/biocint.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Transparente', attr_2: '1 Color', attr_3: '50 Rollos' }, price: 270000, rawPrice: '$270.000 + IVA', img: '../assets/tapes/biocint.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Blanco', attr_2: '1 Color', attr_3: '100 Rollos' }, price: 480000, rawPrice: '$480.000 + IVA', img: '../assets/tapes/biocint.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Transparente', attr_2: '1 Color', attr_3: '100 Rollos' }, price: 435000, rawPrice: '$435.000 + IVA', img: '../assets/tapes/biocint.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Blanco', attr_2: '2 Colores', attr_3: '50 Rollos' }, price: 380000, rawPrice: '$380.000 + IVA', img: '../assets/cintas-impresas.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Transparente', attr_2: '2 Colores', attr_3: '50 Rollos' }, price: 350000, rawPrice: '$350.000 + IVA', img: '../assets/cintas-impresas.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Blanco', attr_2: '2 Colores', attr_3: '100 Rollos' }, price: 560000, rawPrice: '$560.000 + IVA', img: '../assets/cintas-impresas.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Transparente', attr_2: '2 Colores', attr_3: '100 Rollos' }, price: 510000, rawPrice: '$510.000 + IVA', img: '../assets/cintas-impresas.jpg', note: 'Incluye costo de polímero' }
+      ]
+    },
+    {
+      id: 'p_imp24', cat: 'personalizada', name: 'Cinta Impresa 24mm x 50mts', tag: 'Personalizada',
+      selAttrs: { attr_1: 'Blanco', attr_2: '1 Color', attr_3: '200 Rollos' },
+      attrKeys: ['attr_1', 'attr_2', 'attr_3'],
+      variants: [
+        { attrs: { attr_1: 'Blanco', attr_2: '1 Color', attr_3: '200 Rollos' }, price: 400000, rawPrice: '$400.000 + IVA', img: '../assets/tapes/biocint.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Transparente', attr_2: '1 Color', attr_3: '200 Rollos' }, price: 340000, rawPrice: '$340.000 + IVA', img: '../assets/tapes/biocint.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Blanco', attr_2: '2 Colores', attr_3: '200 Rollos' }, price: 470000, rawPrice: '$470.000 + IVA', img: '../assets/cintas-impresas.jpg', note: 'Incluye costo de polímero' },
+        { attrs: { attr_1: 'Transparente', attr_2: '2 Colores', attr_3: '200 Rollos' }, price: 420000, rawPrice: '$420.000 + IVA', img: '../assets/cintas-impresas.jpg', note: 'Incluye costo de polímero' }
+      ]
+    },
+    {
+      id: 'c_cristal', cat: 'comun', name: 'Cinta de embalaje Cristal', tag: 'Cinta Común',
+      selAttrs: { attr_3: '24mm x 45m (x96)' },
+      attrKeys: ['attr_3'],
+      variants: [
+        { attrs: { attr_3: '24mm x 45m (x96)' }, price: 37900, rawPrice: '$37.900 + IVA', img: '../assets/tapes/cristal.jpg', note: 'Metraje real' },
+        { attrs: { attr_3: '48mm x 100m (x36)' }, price: 43200, rawPrice: '$43.200 + IVA', img: '../assets/tapes/cristal.jpg', note: 'Metraje real' }
+      ]
+    },
+    {
+      id: 'c_marron', cat: 'comun', name: 'Cinta de embalaje Marrón', tag: 'Cinta Común',
+      selAttrs: { attr_3: '48mm x 100m (x36)' },
+      attrKeys: ['attr_3'],
+      variants: [
+        { attrs: { attr_3: '48mm x 100m (x36)' }, price: 0, rawPrice: 'Consultar', img: '../assets/tapes/marron.jpg', note: 'Excelente agarre' }
+      ]
+    },
+    {
+      id: 'c_fragil', cat: 'comun', name: 'Cinta pre-impresa "FRÁGIL"', tag: 'Pre-Impresa',
+      selAttrs: { attr_3: '48mm x 100m' },
+      attrKeys: ['attr_3'],
+      variants: [
+        { attrs: { attr_3: '48mm x 100m' }, price: 0, rawPrice: 'Consultar', img: '../assets/tapes/fragil.jpg', note: 'Stock permanente' }
+      ]
+    },
+    {
+      id: 'c_color', cat: 'comun', name: 'Cinta de embalaje de Color', tag: 'De Color',
+      selAttrs: { attr_1: 'Rojo', attr_3: '48mm x 100m' },
+      attrKeys: ['attr_1', 'attr_3'],
+      variants: [
+        { attrs: { attr_1: 'Rojo', attr_3: '48mm x 100m' }, price: 0, rawPrice: 'Consultar', img: '../assets/tapes/roja.jpg', note: 'Fabricación a pedido' },
+        { attrs: { attr_1: 'Negro', attr_3: '48mm x 100m' }, price: 0, rawPrice: 'Consultar', img: '../assets/tapes/super.jpg', note: 'Fabricación a pedido' },
+        { attrs: { attr_1: 'Blanco', attr_3: '48mm x 100m' }, price: 0, rawPrice: 'Consultar', img: '../assets/tapes/biocint.jpg', note: 'Fabricación a pedido' }
+      ]
+    },
+    {
+      id: 'c_stretch', cat: 'comun', name: 'Film Stretch Manual', tag: 'Embalaje',
+      selAttrs: { attr_1: 'Transparente', attr_3: 'Rollo Manual' },
+      attrKeys: ['attr_1', 'attr_3'],
+      variants: [
+        { attrs: { attr_1: 'Transparente', attr_3: 'Rollo Manual' }, price: 0, rawPrice: 'Consultar', img: '../assets/tapes/super.jpg', note: 'Bulto / Palet' },
+        { attrs: { attr_1: 'Negro', attr_3: 'Rollo Manual' }, price: 0, rawPrice: 'Consultar', img: '../assets/tapes/super.jpg', note: 'Bulto / Palet' }
+      ]
+    },
+    {
+      id: 'c_servicio', cat: 'comun', name: 'Servicio de impresión de bolsas/films', tag: 'Servicio',
+      selAttrs: { attr_1: 'PE / PP / Kraft', attr_3: 'Hasta 800mm' },
+      attrKeys: ['attr_1', 'attr_3'],
+      variants: [
+        { attrs: { attr_1: 'PE / PP / Kraft', attr_3: 'Hasta 800mm' }, price: 0, rawPrice: 'Consultar', img: '../assets/tapes/bolsita.jpg', note: 'A pedido' }
+      ]
+    }
+  ];
+
+  function formatImgUrl(img) {
+    if (!img) return '../assets/tapes/biocint.jpg';
+    img = img.trim();
+    if (/^(https?:\/\/|data:|\/)/i.test(img)) return img;
+    if (img.startsWith('../assets/')) return img;
+    if (img.startsWith('assets/')) return '../' + img;
+    return img;
+  }
+
+  function splitCSVLine(line) {
+    const row = [];
+    let current = '';
+    let inQuotes = false;
+    for (let j = 0; j < line.length; j++) {
+      const char = line[j];
+      if (char === '"') inQuotes = !inQuotes;
+      else if (char === ',' && !inQuotes) { row.push(current.trim()); current = ''; }
+      else current += char;
+    }
+    row.push(current.trim());
+    return row.map(r => r.replace(/^"|"$/g, '').trim());
+  }
+
+  function parseCSV(text) {
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+    if (lines.length < 2) return [];
+
+    const rawHeaders = splitCSVLine(lines[0]);
+    const headerMap = {};
+    rawHeaders.forEach((h, idx) => {
+      headerMap[h.toLowerCase().trim()] = idx;
+    });
+
+    const attrKeys = Object.keys(headerMap)
+      .filter(k => k.startsWith('attr_'))
+      .sort((a, b) => {
+        const numA = parseInt(a.replace('attr_', ''), 10) || 0;
+        const numB = parseInt(b.replace('attr_', ''), 10) || 0;
+        return numA - numB;
+      });
+
+    const getCol = (row, colName, fallback = '') => {
+      const idx = headerMap[colName.toLowerCase()];
+      return (idx !== undefined && row[idx] !== undefined) ? row[idx] : fallback;
+    };
+
+    const productsMap = {};
+    for (let i = 1; i < lines.length; i++) {
+      const row = splitCSVLine(lines[i]);
+      const id = getCol(row, 'id', 'item_' + i);
+      const cat = getCol(row, 'categoria', 'comun');
+      const name = getCol(row, 'nombre', 'Producto');
+      const price = parseFloat(getCol(row, 'precio_num', '0')) || 0;
+      const rawPrice = getCol(row, 'precio_texto', '$0');
+      const img = formatImgUrl(getCol(row, 'imagen', '../assets/tapes/biocint.jpg'));
+      const tag = getCol(row, 'etiqueta', 'Producto');
+      const note = getCol(row, 'nota', '');
+
+      const attrs = {};
+      attrKeys.forEach(k => {
+        attrs[k] = getCol(row, k, '-');
+      });
+
+      if (!productsMap[id]) {
+        productsMap[id] = {
+          id, cat, name, tag,
+          selAttrs: { ...attrs },
+          attrKeys,
+          variants: []
+        };
+      }
+      productsMap[id].variants.push({
+        attrs,
+        price, rawPrice, img, note
+      });
+    }
+    return Object.values(productsMap);
+  }
+
+  async function loadSpreadsheetData() {
+    if (!SPREADSHEET_CSV_URL) return;
+    try {
+      const cacheBustUrl = SPREADSHEET_CSV_URL + (SPREADSHEET_CSV_URL.includes('?') ? '&' : '?') + '_t=' + Date.now();
+      const res = await fetch(cacheBustUrl, { cache: 'no-store' });
+      if (res.ok) {
+        const text = await res.text();
+        const items = parseCSV(text);
+        if (items && items.length > 0) {
+          MARKET_ITEMS.length = 0;
+          MARKET_ITEMS.push(...items);
+          const activeChip = document.querySelector('.cat-tabs .chip.active');
+          const currentCat = activeChip ? (activeChip.getAttribute('onclick') || '').match(/'([^']+)'/)?.[1] : 'all';
+          renderMarket(currentCat || 'all');
+        }
+      }
+    } catch (e) {
+      console.log('Fondo de reserva activo para catálogo.', e);
+    }
+  }
+
+  let cart = {};
+
+  function findMatchingVariant(product, candidateAttrs, lastClickedKey) {
+    let match = product.variants.find(v => {
+      return product.attrKeys.every(k => {
+        const val = candidateAttrs[k];
+        return !val || val === '-' || v.attrs[k] === '-' || v.attrs[k] === val;
+      });
+    });
+
+    if (!match && lastClickedKey && candidateAttrs[lastClickedKey]) {
+      const targetVal = candidateAttrs[lastClickedKey];
+      match = product.variants.find(v => v.attrs[lastClickedKey] === targetVal) || product.variants[0];
+    }
+
+    return match || product.variants[0];
+  }
+
+  function selectChip(productId, attrKey, val) {
+    const p = MARKET_ITEMS.find(item => item.id === productId);
+    if (!p) return;
+
+    const candidate = { ...p.selAttrs, [attrKey]: val };
+    const match = findMatchingVariant(p, candidate, attrKey);
+
+    if (match) {
+      p.attrKeys.forEach(k => {
+        if (match.attrs[k] && match.attrs[k] !== '-') {
+          p.selAttrs[k] = match.attrs[k];
+        }
+      });
+    }
+
+    renderMarketCard(p);
+  }
+
+  function getVariantSpecText(v, attrKeys) {
+    const parts = [];
+    (attrKeys || Object.keys(v.attrs)).forEach(k => {
+      const val = v.attrs[k];
+      if (val && val !== '-') parts.push(val);
+    });
+    return parts.join(' · ');
+  }
+
+  function willForceChange(p, attrKey, val) {
+    if (p.selAttrs[attrKey] === val) return false;
+    const candidate = { ...p.selAttrs, [attrKey]: val };
+    const exactMatch = p.variants.find(v => {
+      return p.attrKeys.every(k => {
+        const targetVal = candidate[k];
+        return !targetVal || targetVal === '-' || v.attrs[k] === '-' || v.attrs[k] === targetVal;
+      });
+    });
+    return !exactMatch;
+  }
+
+  function renderMarketCard(p) {
+    const card = document.querySelector(`[data-product-card="${p.id}"]`);
+    if (!card) return;
+
+    const match = findMatchingVariant(p, p.selAttrs);
+    if (!match) return;
+
+    const imgEl = card.querySelector('.pub-media img');
+    const priceEl = card.querySelector('.pub-price');
+    const noteEl = card.querySelector('.pub-note');
+    const waBtn = card.querySelector('.btn-wa');
+
+    if (imgEl) imgEl.src = formatImgUrl(match.img);
+    if (priceEl) priceEl.textContent = match.rawPrice;
+    if (noteEl) {
+      if (match.note) {
+        noteEl.textContent = match.note;
+        noteEl.style.display = 'block';
+      } else {
+        noteEl.style.display = 'none';
+      }
+    }
+
+    if (waBtn && window.BIOCINT) {
+      const specText = getVariantSpecText(match, p.attrKeys);
+      const waMsg = `Hola biocint 👋 Consulta por ${p.name}${specText ? ' (' + specText + ')' : ''}`;
+      waBtn.setAttribute('href', window.BIOCINT.waLink(waMsg));
+    }
+
+    // Update active and dashed states on attribute chips
+    card.querySelectorAll('[data-attr-key]').forEach(chip => {
+      const k = chip.getAttribute('data-attr-key');
+      const val = chip.getAttribute('data-val');
+      const isActive = p.selAttrs[k] === val;
+      const isDashed = !isActive && willForceChange(p, k, val);
+      chip.classList.toggle('active', isActive);
+      chip.classList.toggle('unsupported', isDashed);
+    });
+  }
+
+  function renderMarket(cat) {
+    const grid = document.getElementById("market-grid");
+    const items = cat === 'all' ? MARKET_ITEMS : MARKET_ITEMS.filter(i => i.cat === cat);
+
+    grid.innerHTML = items.map(p => {
+      const match = findMatchingVariant(p, p.selAttrs);
+      const currentMatch = match || p.variants[0];
+
+      let configHtml = '<div class="card-configurator">';
+
+      p.attrKeys.forEach(k => {
+        const uniqueVals = [...new Set(p.variants.map(v => v.attrs[k]).filter(x => x && x !== '-'))];
+        if (uniqueVals.length > 0) {
+          configHtml += `
+            <div class="attr-group">
+              <div class="attr-chips">
+                ${uniqueVals.map(val => {
+                  const isActive = p.selAttrs[k] === val;
+                  const isDashed = !isActive && willForceChange(p, k, val);
+                  return `<button class="attr-chip ${isActive ? 'active' : ''} ${isDashed ? 'unsupported' : ''}" data-attr-key="${k}" data-val="${val}" onclick="selectChip('${p.id}', '${k}', '${val}')">${val}</button>`;
+                }).join('')}
+              </div>
+            </div>`;
+        }
+      });
+
+      configHtml += '</div>';
+
+      const specText = getVariantSpecText(currentMatch, p.attrKeys);
+
+      return `
+        <article class="pub-card" data-product-card="${p.id}">
+          <div class="pub-media">
+            <img src="${formatImgUrl(currentMatch.img)}" alt="${p.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+            <span class="pub-tag">${p.tag}</span>
+          </div>
+          <div class="pub-body">
+            <div class="pub-title">${p.name}</div>
+            ${currentMatch.note ? `<div class="pub-note">${currentMatch.note}</div>` : '<div class="pub-note" style="display:none"></div>'}
+            ${configHtml}
+            <div class="pub-footer">
+              <div class="pub-price">${currentMatch.rawPrice}</div>
+              <div class="pub-actions">
+                <button class="btn btn-sm btn-purple" onclick="addToCart('${p.id}')">🛒 Agregar al Carrito</button>
+                <a href="#" class="btn btn-sm btn-wa" data-wa="Hola biocint 👋 Consulta por ${p.name}${specText ? ' (' + specText + ')' : ''}">WP Directo</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    // Conectar enlaces de WhatsApp declarativos
+    if (window.BIOCINT && window.BIOCINT.mount) {
+      document.querySelectorAll("[data-wa]").forEach((el) => {
+        el.setAttribute("href", window.BIOCINT.waLink(el.getAttribute("data-wa")));
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener");
+      });
+    }
+  }
+
+  function filterMarket(cat, btn) {
+    document.querySelectorAll(".cat-tabs .chip").forEach(c => c.classList.remove("active"));
+    btn.classList.add("active");
+    renderMarket(cat);
+  }
+
+  function addToCart(productId) {
+    const p = MARKET_ITEMS.find(item => item.id === productId);
+    if (!p) return;
+    const match = findMatchingVariant(p, p.selAttrs);
+    if (!match) return;
+
+    const cartKey = `${productId}__` + p.attrKeys.map(k => match.attrs[k] || '-').join('__');
+
+    cart[cartKey] = (cart[cartKey] || 0) + 1;
+    updateCartUI();
+    toggleCart(true);
+  }
+
+  function updateQty(cartKey, delta) {
+    if (!cart[cartKey]) return;
+    cart[cartKey] += delta;
+    if (cart[cartKey] <= 0) delete cart[cartKey];
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const itemsEl = document.getElementById("cart-items");
+    const countEl = document.getElementById("cart-count");
+    const totalEl = document.getElementById("cart-total-price");
+    
+    let totalItems = 0;
+    let totalPrice = 0;
+    let html = "";
+
+    const keys = Object.keys(cart);
+    if (keys.length === 0) {
+      itemsEl.innerHTML = `<p style="text-align:center; font-weight:700; color:var(--muted); margin:3rem 0;">Tu carrito está vacío</p>`;
+    } else {
+      keys.forEach(cartKey => {
+        const parts = cartKey.split('__');
+        const productId = parts[0];
+        const p = MARKET_ITEMS.find(item => item.id === productId);
+        if (!p) return;
+
+        const attrValues = parts.slice(1);
+        const v = p.variants.find(varItem => {
+          return p.attrKeys.every((k, idx) => varItem.attrs[k] === attrValues[idx]);
+        }) || p.variants[0];
+
+        const qty = cart[cartKey];
+        totalItems += qty;
+        totalPrice += (v.price * qty);
+
+        const specText = getVariantSpecText(v, p.attrKeys);
+        const titleText = specText ? `${p.name} (${specText})` : p.name;
+
+        html += `
+          <div class="cart-item">
+            <div>
+              <div class="cart-item-title">${titleText}</div>
+              <div class="cart-item-price">${v.rawPrice}</div>
+            </div>
+            <div class="cart-qty-ctrl">
+              <button class="qty-btn" onclick="updateQty('${cartKey}', -1)">-</button>
+              <span style="font-weight:800; min-width:20px; text-align:center;">${qty}</span>
+              <button class="qty-btn" onclick="updateQty('${cartKey}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      });
+      itemsEl.innerHTML = html;
+    }
+
+    countEl.textContent = totalItems;
+    totalEl.textContent = "$" + totalPrice.toLocaleString('es-AR') + " + IVA";
+  }
+
+  function toggleCart(forceOpen) {
+    const drawer = document.getElementById("cart-drawer");
+    if (forceOpen === true) drawer.classList.add("active");
+    else drawer.classList.toggle("active");
+  }
+
+  function checkoutWhatsApp() {
+    const keys = Object.keys(cart);
+    if (keys.length === 0) {
+      alert("Agregá productos al carrito primero.");
+      return;
+    }
+    let msg = "Hola biocint 👋 Quisiera pedir el siguiente presupuesto desde el sitio web:\n\n";
+    let totalPrice = 0;
+
+    keys.forEach(cartKey => {
+      const parts = cartKey.split('__');
+      const productId = parts[0];
+      const p = MARKET_ITEMS.find(item => item.id === productId);
+      if (p) {
+        const attrValues = parts.slice(1);
+        const v = p.variants.find(varItem => {
+          return p.attrKeys.every((k, idx) => varItem.attrs[k] === attrValues[idx]);
+        }) || p.variants[0];
+
+        const qty = cart[cartKey];
+        const itemTotal = v.price * qty;
+        totalPrice += itemTotal;
+        const specText = getVariantSpecText(v, p.attrKeys);
+        const titleText = specText ? `${p.name} [${specText}]` : p.name;
+        msg += `• ${qty}x ${titleText} (${v.rawPrice})\n`;
+      }
+    });
+
+    msg += `\nTotal estimado: $${totalPrice.toLocaleString('es-AR')} + IVA\n`;
+    msg += `Por favor confirmen disponibilidad y forma de entrega/pago.`;
+
+    window.open(window.BIOCINT.waLink(msg), "_blank");
+  }
+
+  // Inicialización
+  document.getElementById("year").textContent = new Date().getFullYear();
+  if (window.BIOCINT && window.BIOCINT.mount) {
+    window.BIOCINT.mount({});
+  }
+  renderMarket('all');
+  loadSpreadsheetData();
+</script>
+</body>
+</html>

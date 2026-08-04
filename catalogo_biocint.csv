@@ -1,0 +1,23 @@
+id,categoria,nombre,attr_1,attr_2,attr_3,precio_num,precio_texto,imagen,etiqueta,nota
+p_imp48,personalizada,"Cinta Impresa 48mm x 100mts",Blanco,1 Color,50 Rollos,300000,"$300.000 + IVA",../assets/tapes/biocint.jpg,Personalizada,Incluye costo de polímero
+p_imp48,personalizada,"Cinta Impresa 48mm x 100mts",Transparente,1 Color,50 Rollos,270000,"$270.000 + IVA",../assets/tapes/biocint.jpg,Personalizada,Incluye costo de polímero
+p_imp48,personalizada,"Cinta Impresa 48mm x 100mts",Blanco,1 Color,100 Rollos,480000,"$480.000 + IVA",../assets/tapes/biocint.jpg,Personalizada,Incluye costo de polímero
+p_imp48,personalizada,"Cinta Impresa 48mm x 100mts",Transparente,1 Color,100 Rollos,435000,"$435.000 + IVA",../assets/tapes/biocint.jpg,Personalizada,Incluye costo de polímero
+p_imp48,personalizada,"Cinta Impresa 48mm x 100mts",Blanco,2 Colores,50 Rollos,380000,"$380.000 + IVA",../assets/cintas-impresas.jpg,Personalizada,Incluye costo de polímero
+p_imp48,personalizada,"Cinta Impresa 48mm x 100mts",Transparente,2 Colores,50 Rollos,350000,"$350.000 + IVA",../assets/cintas-impresas.jpg,Personalizada,Incluye costo de polímero
+p_imp48,personalizada,"Cinta Impresa 48mm x 100mts",Blanco,2 Colores,100 Rollos,560000,"$560.000 + IVA",../assets/cintas-impresas.jpg,Personalizada,Incluye costo de polímero
+p_imp48,personalizada,"Cinta Impresa 48mm x 100mts",Transparente,2 Colores,100 Rollos,510000,"$510.000 + IVA",../assets/cintas-impresas.jpg,Personalizada,Incluye costo de polímero
+p_imp24,personalizada,"Cinta Impresa 24mm x 50mts",Blanco,1 Color,200 Rollos,400000,"$400.000 + IVA",../assets/tapes/biocint.jpg,Personalizada,Incluye costo de polímero
+p_imp24,personalizada,"Cinta Impresa 24mm x 50mts",Transparente,1 Color,200 Rollos,340000,"$340.000 + IVA",../assets/tapes/biocint.jpg,Personalizada,Incluye costo de polímero
+p_imp24,personalizada,"Cinta Impresa 24mm x 50mts",Blanco,2 Colores,200 Rollos,470000,"$470.000 + IVA",../assets/cintas-impresas.jpg,Personalizada,Incluye costo de polímero
+p_imp24,personalizada,"Cinta Impresa 24mm x 50mts",Transparente,2 Colores,200 Rollos,420000,"$420.000 + IVA",../assets/cintas-impresas.jpg,Personalizada,Incluye costo de polímero
+c_cristal,comun,"Cinta de embalaje Cristal",-, -,24mm x 45m (x96),37900,"$37.900 + IVA",../assets/tapes/cristal.jpg,Cinta Común,Metraje real
+c_cristal,comun,"Cinta de embalaje Cristal",-, -,48mm x 100m (x36),43200,"$43.200 + IVA",../assets/tapes/cristal.jpg,Cinta Común,Metraje real
+c_marron,comun,"Cinta de embalaje Marrón",-, -,48mm x 100m (x36),0,Consultar,../assets/tapes/marron.jpg,Cinta Común,Excelente agarre
+c_fragil,comun,"Cinta pre-impresa 'FRÁGIL'",-, -,48mm x 100m,0,Consultar,../assets/tapes/fragil.jpg,Pre-Impresa,Stock permanente
+c_color,comun,"Cinta de embalaje de Color",Rojo,-,48mm x 100m,0,Consultar,../assets/tapes/roja.jpg,De Color,Fabricación a pedido
+c_color,comun,"Cinta de embalaje de Color",Negro,-,48mm x 100m,0,Consultar,../assets/tapes/super.jpg,De Color,Fabricación a pedido
+c_color,comun,"Cinta de embalaje de Color",Blanco,-,48mm x 100m,0,Consultar,../assets/tapes/biocint.jpg,De Color,Fabricación a pedido
+c_stretch,comun,"Film Stretch Manual",Transparente,-,Rollo Manual,0,Consultar,../assets/tapes/super.jpg,Embalaje,Bulto / Palet
+c_stretch,comun,"Film Stretch Manual",Negro,-,Rollo Manual,0,Consultar,../assets/tapes/super.jpg,Embalaje,Bulto / Palet
+c_servicio,comun,"Servicio de impresión de bolsas/films",PE / PP / Kraft,-,Hasta 800mm,0,Consultar,../assets/tapes/bolsita.jpg,Servicio,A pedido

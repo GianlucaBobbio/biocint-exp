@@ -103,11 +103,12 @@
     <span class="hint">← 10 propuestas · elegí una →</span>
   </div>
   <div class="stage">
-    <iframe id="stage-frame" title="Vista de diseño" src="designs/01-emerald.html"></iframe>
+    <iframe id="stage-frame" title="Vista de diseño" src="designs/11-combineta.html"></iframe>
   </div>
 
   <script>
     const DESIGNS = [
+      { file: "11-combineta.html",  name: "Combineta (Brutalist + Emerald) ⭐" },
       { file: "01-emerald.html",   name: "Emerald Clean" },
       { file: "02-industrial.html",name: "Industrial Dark" },
       { file: "03-editorial.html", name: "Minimal Editorial" },
@@ -135,7 +136,7 @@
       if (sel) sel.value = String(i);
       frame.src = "designs/" + DESIGNS[i].file;
       if (push) history.replaceState(null, "", "#" + (i + 1));
-      document.title = "biocint — " + DESIGNS[i].name + " (" + (i + 1) + "/10)";
+      document.title = "biocint — " + DESIGNS[i].name;
     }
 
     DESIGNS.forEach((d, i) => {

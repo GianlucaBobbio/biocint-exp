@@ -34,15 +34,17 @@ Los 10 diseños **comparten los mismos datos** (`js/products.js`): editás una s
 ## Configuración rápida
 
 ### Número de WhatsApp
+
 En un solo lugar, arriba de `js/products.js`:
 
 ```js
-const WHATSAPP_NUMBER = "5491161402766"; // +54 9 11 6140 2766
+const WHATSAPP_NUMBER = '5491178185091';
 ```
 
 Formato internacional, sin `+`, sin espacios y **sin el 15**.
 
 ### Productos del catálogo
+
 Editá el array `PRODUCTS` en `js/products.js`. Cada ítem:
 
 ```js

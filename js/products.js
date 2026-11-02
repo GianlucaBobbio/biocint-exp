@@ -3,7 +3,7 @@
    Sitio 100% estático: todo va a WhatsApp (sin carrito ni checkout).
    ========================================================================== */
 (function (global) {
-  const WHATSAPP_NUMBER = '5491153897079';
+  const WHATSAPP_NUMBER = '5491178185091';
 
   function waLink(message) {
     const base = 'https://wa.me/' + WHATSAPP_NUMBER;

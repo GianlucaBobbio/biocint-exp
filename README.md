@@ -38,7 +38,7 @@ Los 10 diseños **comparten los mismos datos** (`js/products.js`): editás una s
 En un solo lugar, arriba de `js/products.js`:
 
 ```js
-const WHATSAPP_NUMBER = '5491153897079';
+const WHATSAPP_NUMBER = '5491178185091';
 ```
 
 Formato internacional, sin `+`, sin espacios y **sin el 15**.
